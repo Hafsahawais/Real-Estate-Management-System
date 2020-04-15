@@ -1,11 +1,15 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const app = express();
+var passport = require('passport');
+app.use(passport.initialize());
+app.use(passport.session());
 const http = require('http');
 
 mongoose.Promise = global.Promise;
 mongoose
   .connect(
-    'mongodb://localhost:27017/projectdb',
+    'mongodb://localhost:27017/realestate',
     { useNewUrlParser: true }
   )
   .then(
@@ -15,10 +19,17 @@ mongoose
     (err) => console.log('Error connecting to mongoDB', err)
   );
 
-const app = express();
 const hostname = 'localhost';
 const port = 3000;
 const server = http.createServer(app);
+
+const userRouter = require('./routes/userRouter');
+const  propertyRouter = require('./routes/propertyRouter');
+const  bookingRouter = require('./routes/bookingRouter');
+app.use('/properties', propertyRouter);
+app.use('/users',userRouter);
+app.use('/booking', bookingRouter);
+
 app.use((req, res, next) => {
   console.log(req.headers);
   res.statusCode = 200;

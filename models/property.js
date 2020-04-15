@@ -14,7 +14,7 @@ const property = new Schema ({
   },
   image: {
     type: String,
-    required: true
+    // required: true
   },
   property_type_id: {
     type: Schema.Types.ObjectId,
