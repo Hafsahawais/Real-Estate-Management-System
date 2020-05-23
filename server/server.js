@@ -26,9 +26,13 @@ const server = http.createServer(app);
 const userRouter = require('./routes/userRouter');
 const  propertyRouter = require('./routes/propertyRouter');
 const  bookingRouter = require('./routes/bookingRouter');
+// const  profileRouter = require('./routes/profileRouter');
+const  projectRouter = require('./routes/projectRouter');
 app.use('/properties', propertyRouter);
 app.use('/users',userRouter);
 app.use('/booking', bookingRouter);
+// app.use('/profile', profileRouter);
+app.use('/project', projectRouter);
 
 app.use((req, res, next) => {
   console.log(req.headers);

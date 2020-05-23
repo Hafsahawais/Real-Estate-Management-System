@@ -67,7 +67,9 @@ propertyRouter.route('/:propertyId')
       $set: req.body
     }, { new: true })
       .then((property) => {
+        property.address = req.body.address;
         res.statusCode = 200;
+        res.send('Property updated');
         res.setHeader('Content-Type', 'application/json');
         res.json(property);
       }, (err) => next(err))

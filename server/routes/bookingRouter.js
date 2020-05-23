@@ -20,7 +20,7 @@ bookingRouter.route('/')
       }, (err) => next(err))
       .catch((err) => next(err));
   })
-  //create a property
+  //create a booking
   .post((req, res, next) => {
     var propertyId = req.body.property;
     var userId = req.body.user;
