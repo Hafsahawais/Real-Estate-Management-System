@@ -1,57 +1,44 @@
-var express = require('express');
-var session = require('express-session');
-var bodyParser = require('body-parser');
+const express = require('express');
+
+var app = express();
+var router = express.Router();
+
 var User = require('../models/user');
 var passport = require('passport');
 var authenticate = require('../authenticate');
 
-var router = express.Router();
-router.use(bodyParser.json());
+var authC  = require('../../controller/auth.controller');
 
-router.get('/', authenticate.verifyUser, authenticate.verifyAdmin, function(req, res, next) {
-    User.find({}, function (err, user) {
-      if (err) throw err;
-      res.json(user);
+const storage = new GridFsStorage({
+  url: config.dbUrl,
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(16, (err, buf) => {
+        if (err) return reject(err);
+        const filename = buf.toString('hex') + path.extname(file.originalname);
+        const fileInfo = {
+          filename: filename,
+          bucketName: 'imageMeta'
+        };
+        resolve(fileInfo);
+      });
     });
-  });
-
-router.post('/signup', (req, res, next) => {
-  User.register(new User({username: req.body.username}),
-    req.body.password, (err, user) => {
-      if(err) {
-        res.statusCode = 500;
-        res.setHeader('Content-Type', 'application/json');
-        res.json({err: err});
-      }
-      else {
-        passport.authenticate('local')(req, res, () => {
-          res.statusCode = 200;
-          res.setHeader('Content-Type', 'application/json');
-          res.json({success: true, status: 'Registration Successful!'});
-        });
-      }
-    });
-});
-
-router.post('/login', passport.authenticate('local'), (req, res) => {
-  var token = authenticate.getToken({_id: req.user._id});
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'application/json');
-  res.json({success: true, token: token, status: 'You are successfully logged in!'});
-});
-
-router.get('/logout', (req, res, next) => {
-
-  if (req.session) {
-    req.session.destroy();
-    res.clearCookie('session-id');
-    // res.redirect('/');
-  }
-  else {
-    var err = new Error('You are not logged in!');
-    err.status = 403;
-    next(err);
   }
 });
+const upload = multer({ storage });
+
+router.post('/user/login', authC.userLogin);
+//registration
+router.post('/user/register',upload.array("profileImages"), authC.userRegistration);
+
+//admin
+router.get('/admin/userList', authC.userList);
+router.put('/admin/changePass', authC.changePass);
+
+router.get('/showGFSImage/:filename', authC.showGFSImage); // To view image in front-end
+
+
+// console.log(app);
 
 module.exports = router;
+

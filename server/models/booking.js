@@ -13,7 +13,11 @@ const booking = new Schema ({
   user_id: {
     type: Schema.Types.ObjectId,
     ref : 'users'
-  }
+  },
+  isActive: {
+    type: Boolean,
+    default: true
+  },
 });
 
 var Booking= mongoose.model('booking', booking);

@@ -1,42 +1,18 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const Booking = require('../models/booking');
-const User = require('../models/user');
-const Properties = require('../models/property');
+var app = express();
 
-const bookingRouter = express.Router();
-bookingRouter.use(bodyParser.json());
+var bookingController = require('/controller/booking.controller');
 
-bookingRouter.route('/')
-  // Retrieve all properties
-  .get((req,res,next) => {
-
-    Booking.find({})
-      .then((booking) => {
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.json(booking);
-      }, (err) => next(err))
-      .catch((err) => next(err));
-  })
-  //create a booking
-  .post((req, res, next) => {
-    var propertyId = req.body.property;
-    var userId = req.body.user;
-    Booking.create(req.body)
-      .then((booking) => {
-        booking.message = req.body.message;
-        Properties.findOne({_id: propertyId});
-        User.findOne({_id: userId});
-
-        console.log('booking Created ', booking);
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.json(booking);
-      }, (err) => next(err))
-      .catch((err) => next(err));
-  });
+var router = express.Router();
 
 
-module.exports = bookingRouter;
+router.route('/booking')
+  .get(bookingController.getAllBookings)
+  .post(bookingController.addBooking);
+
+
+router.get('/bookings/:user_id', bookingController.getBookingList);
+
+router.delete('/booking/:booking_id', bookingController.removeBooking);
+
+module.exports = router;

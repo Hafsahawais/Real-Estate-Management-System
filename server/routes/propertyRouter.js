@@ -1,89 +1,49 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const Properties = require('../models/property');
-const User = require('../models/user');
-const propertyRouter = express.Router();
+var multer  = require('multer');
+const crypto = require('crypto');
+var path = require('path');
+var GridFsStorage  = require('multer-gridfs-storage');
 
-propertyRouter.use(bodyParser.json());
+var router = express.Router();
+var propertyController = require('/controller/property.controller');
 
-propertyRouter.route('/')
-  // Retrieve all properties
-  .get((req,res,next) => {
-
-    Properties.find({})
-      .then((Properties) => {
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.json(Properties);
-      }, (err) => next(err))
-      .catch((err) => next(err));
-  })
-  //create a property
-  .post((req, res, next) => {
-    // var userId = req.body.user;
-    Properties.create(req.body)
-      .then((property) => {
-        property.address = req.body.address;
-        property.description = req.body.description;
-        property.image = req.body.image;
-        // User.findOne({_id: userId});
-
-        console.log('Property Created ', property);
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.json(property);
-      }, (err) => next(err))
-      .catch((err) => next(err));
-  })
-  // delete all properties
-  .delete((req, res, next) => {
-    Properties.remove({})
-      .then((resp) => {
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.json(resp);
-      }, (err) => next(err))
-      .catch((err) => next(err));
-  });
-
-propertyRouter.route('/:propertyId')
-  .get((req,res,next) => {
-    Properties.findById(req.params.propertyId)
-    // var userId = req.body.user
-      .then((properties) => {
-        properties.address = req.body.address;
-        properties.description = req.body.description;
-        // User.findOne({_id: userId});
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.json(properties);
-      }, (err) => next(err))
-      .catch((err) => next(err));
-  })
-  //update a property
-  .put((req, res, next) => {
-    Properties.findByIdAndUpdate(req.params.propertyId, {
-      $set: req.body
-    }, { new: true })
-      .then((property) => {
-        property.address = req.body.address;
-        res.statusCode = 200;
-        res.send('Property updated');
-        res.setHeader('Content-Type', 'application/json');
-        res.json(property);
-      }, (err) => next(err))
-      .catch((err) => next(err));
-  })
-  .delete((req, res, next) => {
-    Properties.findByIdAndRemove(req.params.propertyId)
-      .then((resp) => {
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.json(resp);
-      }, (err) => next(err))
-      .catch((err) => next(err));
-  });
+// Create storage engine
+const storage = new GridFsStorage({
+  url: config.dbUrl,
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(16, (err, buf) => {
+        if (err) return reject(err);
+        const filename = buf.toString('hex') + path.extname(file.originalname);
+        const fileInfo = {
+          filename: filename,
+          bucketName: 'imageMeta'
+        };
+        resolve(fileInfo);
+      });
+    });
+  }
+});
+const upload = multer({ storage });
 
 
-module.exports = propertyRouter;
+
+// ====================================================================================
+// ====================================ROUTES=========================================
+// ====================================================================================
+// Property type dropdown
+router.get('/type', propertyController.propertyTypeList);
+router.post('/type', propertyController.addPropertyType);
+
+//Property
+router.post('/new', upload.array("propImages"), propertyController.addNewProperty);
+router.get('/list/:userId', propertyController.getUserList);
+router.get('/list/', propertyController.getFullList);
+router.get('/single/:propertySlug', propertyController.getSingleProperty);
+router.get('/showGFSImage/:filename', propertyController.showGFSImage); // To view image in front-end
+router.post('/markAsSold/:propertySlug', propertyController.markAsSold);
+
+//Properties filter
+router.get('/filter', propertyController.filterProperties);
+
+module.exports = router;

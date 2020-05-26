@@ -2,10 +2,25 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 require('mongoose-currency').loadType(mongoose);
 
-const property_type = ({
-  description: {
+property_type = new Schema({
+  title: {
+    type: String
+  },
+  type: {
     type: String,
-    required: true
+    required: true,
+    enum: ['residential', 'commercial', 'agricultural']
+  },
+  is_active: {
+    type: Boolean,
+    default: true
+  },
+  updatedOn: {
+    type: Date,
+    default: Date.now()
+  },
+  createdOn: {
+    type: Date
   }
 });
 

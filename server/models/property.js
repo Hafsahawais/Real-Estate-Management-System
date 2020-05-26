@@ -1,35 +1,93 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-require('mongoose-currency').loadType(mongoose);
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-const property = new Schema ({
-  address: {
+const property = mongoose.model('property', new mongoose.Schema({
+  title: {
     type: String,
-    required: true,
-    unique: true
-  },
-  description: {
-    type: String,
+    trim: true,
     required: true
   },
-  image: {
+  propertyFor: {
     type: String,
-    // required: true
+    required: true,
+    default: 'sell',
+    enum: ['sell', 'rent']
   },
-  property_type_id: {
+  description: {
+    type: String
+  },
+  type: {
     type: Schema.Types.ObjectId,
     ref: 'property_type'
   },
-  user_id : {
+  city: {
     type: Schema.Types.ObjectId,
-    ref: 'user'
+    ref: 'city'
   },
-  project_id: {
+
+  length: {
+    type: Number,
+    required: true
+  },
+  breadth: {
+    type: Number,locality: {
+      type: String,
+      required: true
+    },
+    required: true
+  },
+  cornrPlot: {
+    type: Boolean,
+    default: false,
+    enum: [true, false]
+  },
+  address: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true
+  },
+  price: {
+    type: Number
+  },
+  phoneNo: {
+    type: String,
+    required: true
+  },
+  userId: {
     type: Schema.Types.ObjectId,
-    ref: 'project'
+    ref: 'user',
+    required: true
+  },
+  status: {
+    type: Schema.Types.ObjectId,
+    ref: 'booking',
+  },
+  isActive: {
+    type: Boolean,
+    default: true
+  },
+  slug : {
+    type: String,
+    required: true
+  },
+  images: {
+    type: [String]
+  },
+  imgPath: {
+    type: String
+  },
+  updatedOn: {
+    type: Date,
+    default: Date.now()
+  },
+  createdOn: {
+    type: Date,
+    default: Date.now()
   }
-});
+}) );
 
 var Property = mongoose.model('property', property);
-
 module.exports = Property;

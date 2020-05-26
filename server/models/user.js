@@ -7,24 +7,53 @@ var passportLocalMongoose = require('passport-local-mongoose');
 // const bcrypt = require('bcryptjs');
 
 const user = new Schema ({
-  // name: {
-  //   type:String,
-  //   unique:true,
-  //   required: true
-  // },
-  // password: {
-  //   type: String,
-  //   required: true,
-  //    minlength: 8
-  // },
+  fname: {
+    type: String,
+    required: true
+  },
+  lname: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    unique: true,
+    required: true
+  },
+  phoneNo: {
+    type: String,
+    unique: true,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  city: {
+    type: Schema.Types.ObjectId,
+    ref: 'city'
+  },
+  userType: {
+    type: Number,
+    default: 1
+  },
+  updatedOn: {
+    type: Date,
+    default: Date.now()
+  },
+  createdOn: {
+    type: Date
+  },
+  images: {
+    type: [String]
+  },
+  imgPath: {
+    type: String
+  },
   admin: {
     type: Boolean,
     default: false
   }
-  // booking_id: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'booking'
-  // }
 
 });
 user.plugin(passportLocalMongoose);
