@@ -19,10 +19,41 @@ export class DashboardComponent implements OnInit {
   public datasets: any;
   public data: any;
   public salesChart;
+  places: Array<any> = [];
   public clicked: boolean = true;
   public clicked1: boolean = false;
 
-  constructor() { }
+  constructor() {
+    this.places = [
+      {
+        imgSrc: 'assets/images/card-1.jpg',
+        place: 'Cozy 5 Stars Apartment',
+        description:
+        // tslint:disable-next-line:max-line-length
+          'The place is close to Barceloneta Beach and bus stop just 2 min by walk and near to "Naviglio" where you can enjoy the main night life in Barcelona.',
+        charge: 'Rs. 50,000,000',
+        location: 'Karachi, Pakistan'
+      },
+      {
+        imgSrc: 'assets/images/card-2.jpg',
+        place: 'Office Studio',
+        description:
+        // tslint:disable-next-line:max-line-length
+          'The place is close to Metro Station and bus stop just 2 min by walk and near to "Naviglio" where you can enjoy the night life in London, UK.',
+        charge: 'Rs. 50,000,000',
+        location: 'Karachi, Pakistan'
+      },
+      {
+        imgSrc: 'assets/images/card-3.jpg',
+        place: 'Beautiful Castle',
+        description:
+        // tslint:disable-next-line:max-line-length
+          'The place is close to Metro Station and bus stop just 2 min by walk and near to "Naviglio" where you can enjoy the main night life in Milan.',
+        charge: 'Rs. 50,000,000',
+        location: 'Karachi, Pakistan'
+      }
+    ];
+  }
 
   ngOnInit() {
 
