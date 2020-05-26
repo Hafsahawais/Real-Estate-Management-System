@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-var city_model = require('../server/models/city');
-var users = require('../server/models/user');
+var city_model = require('../models/city');
+var users = require('../models/user');
 
 
 

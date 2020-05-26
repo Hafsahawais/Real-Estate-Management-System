@@ -1,7 +1,7 @@
 const express = require('express');
 var app = express();
 
-var bookingController = require('/controller/booking.controller');
+var bookingController = require('/Backend/controller/booking.controller');
 
 var router = express.Router();
 

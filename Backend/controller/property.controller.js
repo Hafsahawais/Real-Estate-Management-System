@@ -2,8 +2,8 @@ const moment = require('moment');
 const fs = require('fs');
 var Grid  = require('gridfs-stream');
 
-var property_type = require('../server/models/property_type');
-var Property = require('../server/models/property');
+var property_type = require('../models/property_type');
+var Property = require('../models/property');
 const helpers = require('../provider/helper');
 
 

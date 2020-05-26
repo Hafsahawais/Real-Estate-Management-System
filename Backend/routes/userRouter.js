@@ -7,7 +7,7 @@ var User = require('../models/user');
 var passport = require('passport');
 var authenticate = require('../authenticate');
 
-var authC  = require('../../controller/auth.controller');
+var authC  = require('../controller/auth.controller');
 
 const storage = new GridFsStorage({
   url: config.dbUrl,

@@ -5,7 +5,7 @@ var path = require('path');
 var GridFsStorage  = require('multer-gridfs-storage');
 
 var router = express.Router();
-var propertyController = require('/controller/property.controller');
+var propertyController = require('/Backend/controller/property.controller');
 
 // Create storage engine
 const storage = new GridFsStorage({

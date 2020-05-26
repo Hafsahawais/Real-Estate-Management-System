@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
-var user = require("../server/models/user");
+var user = require("../models/user");
 // var tokenProvider = require('../providers/token.provider');
 const jwt = require("jsonwebtoken");
 const createReadStream = require("gridfs-stream");

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-var users = require('../server/models/user');
-var Property = require('../server/models/property');
-var Booking = require('../server/models/booking');
+var users = require('../models/user');
+var Property = require('../models/property');
+var Booking = require('../models/booking');
 
 module.exports = {
   getAllBookings: (req, res) => {

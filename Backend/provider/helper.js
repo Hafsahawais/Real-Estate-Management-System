@@ -3,7 +3,7 @@ module.exports = {
   slugGenerator: async (title, fieldName, tableName) => {
     title = (title) ? title : 'Property listing';
     var slug = title.trim().toLowerCase().split(' ').join('-').replace(/[,"$!^@%*&]+/g, "");
-    let table = require(`../server/models/${tableName}`);
+    let table = require(`./Backend/server`);
     let incrementer = 0;
     if(table){
       do {

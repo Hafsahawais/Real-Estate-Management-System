@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 
-const config = require('../config');
+const config = require('./config');
 var app = express();
 
 const startupdebug = require('debug')('app:startup');
