@@ -3,9 +3,10 @@ var multer  = require('multer');
 const crypto = require('crypto');
 var path = require('path');
 var GridFsStorage  = require('multer-gridfs-storage');
+var config = require('../config')
 
 var router = express.Router();
-var propertyController = require('/Backend/controller/property.controller');
+var propertyController = require('../controller/property.controller');
 
 // Create storage engine
 const storage = new GridFsStorage({

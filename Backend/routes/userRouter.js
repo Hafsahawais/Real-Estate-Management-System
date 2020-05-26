@@ -1,7 +1,12 @@
 const express = require('express');
-
+var GridFsStorage  = require('multer-gridfs-storage');
+var multer  = require('multer');
+const crypto = require('crypto');
+var path = require('path');
 var app = express();
 var router = express.Router();
+var config = require('../config')
+
 
 var User = require('../models/user');
 var passport = require('passport');

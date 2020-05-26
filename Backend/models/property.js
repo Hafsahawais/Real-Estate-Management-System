@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-const property = mongoose.model('property', new mongoose.Schema({
+const Property = mongoose.model('property', new mongoose.Schema({
   title: {
     type: String,
     trim: true,
@@ -89,5 +89,4 @@ const property = mongoose.model('property', new mongoose.Schema({
   }
 }) );
 
-var Property = mongoose.model('property', property);
 module.exports = Property;

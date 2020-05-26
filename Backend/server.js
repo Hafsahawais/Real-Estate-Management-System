@@ -51,7 +51,7 @@ app.use('property', property);
 var port =  process.env.PORT || 3000;
 var hostname = 'localhost';
 
-server.listen(port, hostname, () => {
+app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
 
