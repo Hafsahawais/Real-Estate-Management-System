@@ -42,7 +42,7 @@ app.use(function(req, res, next) {
 // Routes
 app.use('/auth', users);
 app.use('/booking', booking);
-app.use('property', property);
+app.use('/property', property);
 
 //console.log(process.env.PORT); //.PORT, ' -port');
 // var tokenn = require('./config/config').secretKey;

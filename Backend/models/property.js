@@ -21,8 +21,7 @@ const Property = mongoose.model('property', new mongoose.Schema({
     ref: 'property_type'
   },
   city: {
-    type: Schema.Types.ObjectId,
-    ref: 'city'
+    type: String
   },
 
   length: {

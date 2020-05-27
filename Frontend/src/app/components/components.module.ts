@@ -5,6 +5,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {UserService} from "../services/user.service";
+import {CommonService} from "../services/common.service";
 
 @NgModule({
   imports: [
@@ -21,6 +23,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FooterComponent,
     NavbarComponent,
     SidebarComponent
+  ],
+  providers: [
+    UserService,
+    CommonService
   ]
 })
 export class ComponentsModule { }

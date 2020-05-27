@@ -16,6 +16,7 @@ import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {FlexLayoutModule} from "@angular/flex-layout";
+import {AddPropertyComponent} from "../../pages/add-property/add-property.component";
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -36,7 +37,8 @@ import {FlexLayoutModule} from "@angular/flex-layout";
     UserProfileComponent,
     TablesComponent,
     IconsComponent,
-    MapsComponent
+    MapsComponent,
+    AddPropertyComponent,
   ]
 })
 
