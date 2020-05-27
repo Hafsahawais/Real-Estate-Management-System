@@ -16,7 +16,7 @@ conn.on('connected', () => {
 });
 
 module.exports = {
-  userLogin: (req, res) => {
+  userLogin: (req, res, next) => {
     var loginType;
     if (req.body.email !== "" && req.body.password !== "") {
       if (isNaN(req.body.email)) loginType = "email";
@@ -56,14 +56,14 @@ module.exports = {
     // res.status(400).send('err')
     let imgs = [];
     users = new user();
+
     if (req.files && req.files.length)
       req.files.forEach(ele => imgs.push(ele.filename));
-
+    console.log(req.body)
     users.fname = req.body.fname;
     users.lname = req.body.lname;
     users.email = req.body.email;
     users.phoneNo = req.body.phoneNo;
-    users.state = req.body.state;
     users.city = req.body.city;
     users.body.images = imgs;
     users.body.imgPath = 'register';
