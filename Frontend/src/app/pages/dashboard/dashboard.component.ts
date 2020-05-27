@@ -44,7 +44,7 @@ export class DashboardComponent implements OnInit {
         place: 'Beautiful Castle',
         description: 'The place is close to Metro Station and bus stop just 2 min by walk and near to "Naviglio" where you can enjoy the main night life in Milan.',
         charge: 'Rs. 50,000,000',
-        location: 'Karachi, Pakistan'
+        location: 'Karachi, China'
       }
     ];
   }
