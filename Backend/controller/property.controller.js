@@ -1,10 +1,7 @@
-const moment = require('moment');
-const fs = require('fs');
 var Grid  = require('gridfs-stream');
 const mongoose = require("mongoose");
 var property_type = require('../models/property_type');
 var Property = require('../models/property');
-const helpers = require('../provider/helper');
 
 
 var gfs;

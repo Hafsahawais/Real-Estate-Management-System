@@ -3,7 +3,7 @@ var multer  = require('multer');
 const crypto = require('crypto');
 var path = require('path');
 var GridFsStorage  = require('multer-gridfs-storage');
-var config = require('../config')
+var config = require('../config');
 
 var router = express.Router();
 var propertyController = require('../controller/property.controller');

@@ -8,9 +8,23 @@ const project = new Schema ({
     required:true,
     unique: true
   },
-  total_number: {
-    type: Number
-  }
+  images: {
+    type: [String]
+  },
+  imgPath: {
+    type: String
+  },
+  location: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String
+  },
+  is_active: {
+    type: Boolean,
+    default: true
+  },
 });
 
 var Project = mongoose.model('project', project);

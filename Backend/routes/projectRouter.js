@@ -1,40 +1,50 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const Project = require('../models/project');
-const User = require('../models/user');
-const projectRouter = express.Router();
+var multer  = require('multer');
+const crypto = require('crypto');
+var path = require('path');
+var GridFsStorage  = require('multer-gridfs-storage');
+var config = require('../config');
 
-projectRouter.use(bodyParser.json());
+var router = express.Router();
+var propertyController = require('../controller/project.controller');
 
-projectRouter.route('/')
-  .post((req, res, next) => {
-    // var userId = req.body.user;
-    Project.create(req.body)
-      .then((project) => {
-        project.name = req.body.name;
-        project.total_number = project.total_number + 1;
-
-        // User.findOne({_id: userId});
-
-        console.log('Project Created ', project);
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.json(project);
-      }, (err) => next(err))
-      .catch((err) => next(err));
-  })
-
-.delete((req, res, next) => {
-  Project.findByIdAndRemove(req.params.projectId)
-    .then((resp) => {
-      res.statusCode = 200;
-      res.send('Project ' + req.body.name + ' removed ');
-      res.setHeader('Content-Type', 'application/json');
-      res.json(resp);
-    }, (err) => next(err))
-    .catch((err) => next(err));
+// Create storage engine
+const storage = new GridFsStorage({
+    url: config.dbUrl,
+    file: (req, file) => {
+        return new Promise((resolve, reject) => {
+            crypto.randomBytes(16, (err, buf) => {
+                if (err) return reject(err);
+                const filename = buf.toString('hex') + path.extname(file.originalname);
+                const fileInfo = {
+                    filename: filename,
+                    bucketName: 'imageMeta'
+                };
+                resolve(fileInfo);
+            });
+        });
+    }
 });
+const upload = multer({ storage });
 
-module.exports = projectRouter;
 
+
+// ====================================================================================
+// ====================================ROUTES=========================================
+// ====================================================================================
+// Property type dropdown
+router.get('/type', propertyController.propertyTypeList);
+router.post('/type', propertyController.addPropertyType);
+
+//Property
+router.post('/new', upload.array("propImages"), propertyController.addNewProperty);
+router.get('/list/:userId', propertyController.getUserList);
+router.get('/list/', propertyController.getFullList);
+router.get('/single/:propertySlug', propertyController.getSingleProperty);
+router.get('/showGFSImage/:filename', propertyController.showGFSImage); // To view image in front-end
+router.post('/markAsSold/:propertySlug', propertyController.markAsSold);
+
+//Properties filter
+router.get('/filter', propertyController.filterProperties);
+
+module.exports = router;

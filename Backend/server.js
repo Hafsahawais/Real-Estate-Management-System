@@ -4,6 +4,7 @@ const app = express();
 var passport = require("passport");
 app.use(passport.initialize());
 app.use(passport.session());
+
 const http = require("http");
 mongoose.Promise = global.Promise;
 mongoose
@@ -14,6 +15,7 @@ mongoose
         },
         (err) => console.log("Error connecting to mongoDB", err)
     );
+
 const hostname = "localhost";
 const port = 3000;
 const server = http.createServer(app);
