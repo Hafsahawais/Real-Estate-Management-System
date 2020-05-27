@@ -40,21 +40,21 @@ module.exports = {
   addNewProperty: async (req, res) => {
     let imgs = [];
     try{
-
+        var property = new Property();
       if(req.files && req.files.length)
         req.files.forEach(ele => imgs.push(ele.filename) );
       //Creating slug for the listing
-      var slug  = await helpers.slugGenerator(req.body.title, 'title', 'property');
-      req.body.slug = slug;
-      req.body.type = req.body.proptype;
-      req.body.cornrPlot = req.body.cornrPlot ? true : false;
-      req.body.images = imgs;
-      req.body.imgPath = 'properties';
+      // var slug  = await helpers.slugGenerator(req.body.title, 'title', 'property');
+
+      property.type = req.body.type;
+      property.cornrPlot = req.body.cornrPlot ? true : false;
+      property.images = imgs;
+      property.imgPath = 'properties';
 
       const prop = new Property(req.body);
       const result = await prop.save();
 
-      if(result && result._id && result.slug)
+      if(result && result._id)
         res.status(200).json({result, message: "Your property has been successfully posted"});
       else throw new Error('Something Went Wrong');
     }
@@ -76,7 +76,7 @@ module.exports = {
   },
   getSingleProperty: async (req, res) => {
     try{
-      var result  = await Property.findOne({ slug: req.params.propertySlug })
+      var result  = await Property.findOne({ _id: req.params.property_id })
         .populate('city', 'name')
         .populate('type', 'title');
 
@@ -106,7 +106,7 @@ module.exports = {
   },
   markAsSold: async (req, res) => {
     try{
-      const result = await Property.update({ slug: req.params.propertySlug }, { status: req.body.status });
+      const result = await Property.update({ _id: req.params.property_id }, { status: req.body.status });
       console.log({result});
       if(result && result.nModified === 1) res.status(200).json({ result, message: "Property has been updated Successfully" });
       else throw new Error('Error in updating property');
