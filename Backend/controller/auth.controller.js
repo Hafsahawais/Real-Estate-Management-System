@@ -123,7 +123,7 @@ module.exports = {
     });
 
     // new Promise((resolve, reject) => {
-    //     return userM.findOne({ _id: req.body._id })
+    //     return user.findOne({ _id: req.body._id })
     // })
     // .then(resp => {
     //     res.status(200).json({resp});

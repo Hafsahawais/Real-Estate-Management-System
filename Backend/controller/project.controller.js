@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 var fs = require('fs');
 var http = require('http');
 var Project = require('../models/project');
+const helpers = require('../provider/helper');
 
 
 var gfs;
@@ -27,19 +28,20 @@ module.exports = {
             var project = new Project();
             if (req.files && req.files.length)
                 req.files.forEach(ele => imgs.push(ele.filename));
-            //Creating slug for the listing
-            // var slug  = await helpers.slugGenerator(req.body.title, 'title', 'property');
+            // Creating slug for the listing
+            var slug  = await helpers.slugGenerator(req.body.title, 'title', 'project');
 
-            project.name = req.body.name;
-            project.description = req.body.description;
-            project.location = req.body.location;
-            project.images = imgs;
-            project.imgPath = 'projects';
+            req.body.slug = slug;
+            req.body.name = req.body.projectname;
+            req.body.description = req.body.descr;
+            req.body.location = req.body.address;
+            req.body.images = imgs;
+            req.body.imgPath = 'properties';
 
-            const prop = new Project(req.body);
+            const p = new Project(req.body);
             const result = await project.save();
 
-            if (result && result._id)
+            if (result && result._id && result.slug)
                 res.status(200).json({result, message: "Your project has been successfully posted"});
             else throw new Error('Something Went Wrong');
         } catch (err) {
@@ -70,6 +72,31 @@ module.exports = {
 
 
         })
+        // new Promise((resolve, reject) => {
+        //     return Project.findOne({ _id: req.body._id })
+        // })
+        //     .then(resp => {
+        //         res.status(200).json({resp});
+        //     })
+        //     .catch()
+    },
+    getSingleProject: async (req, res) => {
+        try{
+            var result  = await Project.findOne({ slug: req.params.projectSlug })
+                .populate('location', 'name')
+                .populate('description');
+
+            var files = [];
+            if(result && result.images.length){
+                files = await gfs.files.find({ filename: { $in : result.images } }).toArray();
+            }
+            if(result) res.status(200).json({result, files});
+            else throw new Error('Something Went Wrong');
+        }
+        catch(err){
+            res.status(400).json({message: err.message});
+        }
+
     },
     showGFSImage: (req, res) => {
         gfs.files.findOne({ filename: req.params.filename }, (err, file) => {

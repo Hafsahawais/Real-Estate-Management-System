@@ -38,6 +38,7 @@ router.get('/projectlist', projectController.projectList);
 router.post('/newproject', upload.array("propImages"), projectController.addNewProject);
 
 router.put('/updateproject', projectController.updateProject);
+router.put('/singleproject', projectController.getSingleProject);
 router.get('/showGFSImage/:filename', projectController.showGFSImage); // To view image in front-end
 
 //Properties filter

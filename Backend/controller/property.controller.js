@@ -1,7 +1,10 @@
+const moment = require('moment');
+const fs = require('fs');
 var Grid  = require('gridfs-stream');
 const mongoose = require("mongoose");
 var property_type = require('../models/property_type');
 var Property = require('../models/property');
+const helpers = require('../provider/helper');
 
 
 var gfs;
@@ -37,21 +40,21 @@ module.exports = {
   addNewProperty: async (req, res) => {
     let imgs = [];
     try{
-        var property = new Property();
+
       if(req.files && req.files.length)
         req.files.forEach(ele => imgs.push(ele.filename) );
       //Creating slug for the listing
-      // var slug  = await helpers.slugGenerator(req.body.title, 'title', 'property');
-
-      property.type = req.body.type;
-      property.cornrPlot = req.body.cornrPlot ? true : false;
-      property.images = imgs;
-      property.imgPath = 'properties';
+      var slug  = await helpers.slugGenerator(req.body.title, 'title', 'property');
+      req.body.slug = slug;
+      req.body.type = req.body.proptype;
+      req.body.cornrPlot = req.body.cornrPlot ? true : false;
+      req.body.images = imgs;
+      req.body.imgPath = 'properties';
 
       const prop = new Property(req.body);
       const result = await prop.save();
 
-      if(result && result._id)
+      if(result && result._id && result.slug)
         res.status(200).json({result, message: "Your property has been successfully posted"});
       else throw new Error('Something Went Wrong');
     }
@@ -62,20 +65,20 @@ module.exports = {
   },
   getUserList: (req, res) => {
     Property.find({ isActive: true, userId: req.params.userId })
-      .populate('city', 'name')
-      .populate('type', 'title')
-      .exec((err, result) => {
-        if (err)
-          res.status(400).send(err);
-        else
-          res.status(200).json(result);
-      });
+        .populate('city', 'name')
+        .populate('type', 'title')
+        .exec((err, result) => {
+          if (err)
+            res.status(400).send(err);
+          else
+            res.status(200).json(result);
+        });
   },
   getSingleProperty: async (req, res) => {
     try{
-      var result  = await Property.findOne({ _id: req.params.property_id })
-        .populate('city', 'name')
-        .populate('type', 'title');
+      var result  = await Property.findOne({ slug: req.params.propertySlug })
+          .populate('city', 'name')
+          .populate('type', 'title');
 
       var files = [];
       if(result && result.images.length){
@@ -91,19 +94,19 @@ module.exports = {
   },
   getFullList: (req, res) => {
     Property.find({ isActive: true })
-      .populate('city', 'name')
-      .populate('type', 'title')
-      .populate('userId', 'name')
-      .exec((err, result) => {
-        if (err)
-          res.status(400).send(err);
-        else
-          res.status(200).json(result);
-      });
+        .populate('city', 'name')
+        .populate('type', 'title')
+        .populate('userId', 'name')
+        .exec((err, result) => {
+          if (err)
+            res.status(400).send(err);
+          else
+            res.status(200).json(result);
+        });
   },
   markAsSold: async (req, res) => {
     try{
-      const result = await Property.update({ _id: req.params.property_id }, { status: req.body.status });
+      const result = await Property.update({ slug: req.params.propertySlug }, { status: req.body.status });
       console.log({result});
       if(result && result.nModified === 1) res.status(200).json({ result, message: "Property has been updated Successfully" });
       else throw new Error('Error in updating property');
@@ -133,15 +136,15 @@ module.exports = {
       query['status'] = { $in: req.query.status.split(",") };
     console.log({ query });
     Property.find(query)
-      .populate('city', 'name')
-      .populate('type', 'title')
-      .populate('userId', 'name')
-      .exec((err, result) => {
-        if (err)
-          res.status(400).send(err);
-        else
-          res.status(200).json(result);
-      });
+        .populate('city', 'name')
+        .populate('type', 'title')
+        .populate('userId', 'name')
+        .exec((err, result) => {
+          if (err)
+            res.status(400).send(err);
+          else
+            res.status(200).json(result);
+        });
   },
   showGFSImage: (req, res) => {
     gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
