@@ -1,6 +1,7 @@
 var Grid  = require('gridfs-stream');
 const mongoose = require("mongoose");
-
+var fs = require('fs');
+var http = require('http');
 var Project = require('../models/project');
 
 
@@ -58,22 +59,39 @@ module.exports = {
             Project.location = req.body.location;
             Project.images = imgs;
             Project.imgPath = 'projects';
-            if (err)
-                res
-                    .status(400)
-                    .json({message: "Something Went Wrong", data: err});
-            else
-                res
-                    .status(200)
-                    .json({
-                        message: "Project updated Successfully",
-                        id: resp
-                    });
+
+            Project.save((err, data) => {
+                if (err) res.status(400).send(err);
+                else
+                    res
+                        .status(200)
+                        .json({message: "Project Added Successfully", id: data._id});
+            });
 
 
         })
-    }
+    },
+    showGFSImage: (req, res) => {
+        gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+            // Check if file
+            if (!file || file.length === 0) {
+                return res.status(404).json({
+                    err: 'No file exists'
+                });
+            }
 
+            // Check if image
+            if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
+                // Read output to browser
+                const readstream = createReadStream(file.filename);
+                readstream.pipe(res);
+            } else {
+                res.status(404).json({
+                    err: 'Not an image'
+                });
+            }
+        })
+    }
 
 
 

@@ -19,13 +19,16 @@ mongoose
 const hostname = "localhost";
 const port = 3000;
 const server = http.createServer(app);
+
 const userRouter = require("./routes/userRouter");
 const propertyRouter = require("./routes/propertyRouter");
 const bookingRouter = require("./routes/bookingRouter");
-
+const projectRouter = require("./routes/projectRouter");
 app.use("/properties", propertyRouter);
 app.use("/auth", userRouter);
 app.use("/booking", bookingRouter);
+app.use("/project", projectRouter);
+
 
 app.use((req, res, next) => {
   console.log(req.headers);
