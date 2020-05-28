@@ -12,5 +12,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
   }
+  getUrl() {
+    return "url('./assets/img/theme/login-back.jpg')";
+  }
 
 }
