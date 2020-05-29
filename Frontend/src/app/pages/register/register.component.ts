@@ -12,4 +12,8 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
   }
 
+  getUrl() {
+    return "url('./assets/img/theme/login-back.jpg')";
+  }
+
 }
