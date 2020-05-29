@@ -1,6 +1,6 @@
 const express = require('express');
 var path = require('path');
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 
@@ -10,12 +10,12 @@ var app = express();
 const startupdebug = require('debug')('app:startup');
 
 app.use(express.static(path.join(__dirname, 'uploads')));
-
+app.use(bodyParser.json());
 // Routing
 var users = require('./routes/userRouter');
 var booking = require('./routes/bookingRouter');
 var property = require('./routes/propertyRouter');
-
+var complainRouter = require("./routes/complainRouter");
 // Connect with DB
 mongoose.connect('mongodb://localhost/realEstatedb')
   .then((conn) => // we're connected!
@@ -43,6 +43,7 @@ app.use(function(req, res, next) {
 app.use('/auth', users);
 app.use('/booking', booking);
 app.use('property', property);
+app.use("/complains", complainRouter);
 
 //console.log(process.env.PORT); //.PORT, ' -port');
 // var tokenn = require('./config/config').secretKey;
