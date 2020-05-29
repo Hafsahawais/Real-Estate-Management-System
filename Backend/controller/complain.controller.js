@@ -16,7 +16,7 @@ module.exports = {
         const complain = new Complain({
             title: req.body.title,
             type : req.body.type,
-            description: req.body.descriptions
+            description: req.body.description
         });
 
         try {
