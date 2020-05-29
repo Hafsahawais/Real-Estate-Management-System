@@ -92,8 +92,8 @@
       </div>
     </div>
   </div>
-  <div class="mb-20" fxLayout="row" fxLayout.lt-md="column" fxFlex fxLayoutGap="20px">
-    <div fxFlex *ngFor="let item of places">
+  <div class="d-flex flex-wrap" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap.xs="0" fxFlex fxLayoutGap="30px">
+    <div fxFlex *ngFor="let item of places" style="width: 10px">
       <mat-card>
         <img mat-card-image [src]="item.imgSrc">
         <mat-card-header style="justify-content: center">
@@ -116,7 +116,6 @@
       </mat-card>
     </div>
   </div>
-</div>
 <div class="container-fluid mt--7">
 <!--  <div class="row">-->
 <!--    <div class="col-xl-8 mb-5 mb-xl-0">-->
