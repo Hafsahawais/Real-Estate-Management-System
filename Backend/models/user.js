@@ -30,8 +30,7 @@ const user = new Schema ({
     required: true
   },
   city: {
-    type: Schema.Types.ObjectId,
-    ref: 'city'
+    type: String
   },
   userType: {
     type: Number,

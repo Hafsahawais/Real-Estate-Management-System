@@ -14,15 +14,19 @@ export class UserService {
   get currentUser(){
     var token = localStorage.getItem('token');
     if(!token) return null;
-    
+
     let jwtHelper = new JwtHelper();
     // console.log('decoded ', jwtHelper.decodeToken(token));
-    
+
     return jwtHelper.decodeToken(token);
   }
 
   getcurrentUserDetails(userId){
     return this.http.get(this.commonService.base_url + '/user/' + userId);
+  }
+
+  signUp(body) {
+    return this.http.post(this.commonService.base_url + '/user/register', body);
   }
 
 }

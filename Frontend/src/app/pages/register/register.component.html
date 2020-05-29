@@ -38,44 +38,102 @@
           <div class="text-center text-muted mb-4">
             <span>Sign Up</span>
           </div>
-          <form role="form">
+          <form [formGroup]="signUpForm" (ngSubmit)="signUp()" role="form">
+            <div *ngIf="mainErrorMessage">
+              <p class="alert alert-{{ mainErrorMessage.type }}">{{ mainErrorMessage.message }}</p>
+            </div>
             <div class="form-group">
-              <div class="input-group input-group-alternative mb-3">
+              <div class="input-group input-group-alternative">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
                 </div>
-                <input class="form-control" placeholder="Name" type="text">
+                <input formControlName="fname" class="form-control" placeholder="First Name" type="text" required>
               </div>
+              <small class="text-danger"
+                     *ngIf="fname.touched && fname.invalid"  >
+                This field is required</small>
             </div>
             <div class="form-group">
-              <div class="input-group input-group-alternative mb-3">
+              <div class="input-group input-group-alternative">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                </div>
+                <input required formControlName="lname" class="form-control" placeholder="Last Name" type="text">
+              </div>
+              <small class="text-danger"
+                     *ngIf="lName.touched && lName.invalid"  >
+                This field is required</small>
+            </div>
+            <div class="form-group">
+              <div class="input-group input-group-alternative">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                 </div>
-                <input class="form-control" placeholder="Email" type="email">
+                <input required formControlName="email" class="form-control" placeholder="Email" type="email">
+                <span *ngIf="email.pending" class="input-icon"><i class="fa fa-spinner fa-spin fa-2x fa-fw" ></i></span>
               </div>
+              <small class="text-danger"
+                     *ngIf="email.touched && email.invalid"  >
+                <span class="text-danger" *ngIf="email.errors.required" >This field is required</span>
+                <span class="text-danger" *ngIf="email.errors.email" >Please enter a valid email address</span>
+                <span class="text-danger" *ngIf="email.errors.checkEmailAvailability" >This email address is already taken</span>
+              </small>
+            </div>
+            <div class="form-group">
+              <div class="input-group input-group-alternative">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="ni ni-mobile-button"></i></span>
+                </div>
+                <input formControlName="phoneNo" class="form-control remove-numbr-icn" placeholder="Phone Number" maxlength="11" type="number" required>
+              </div>
+              <small class="text-danger"
+                     *ngIf="phoneNo.touched && phoneNo.invalid"  >
+                This field is required</small>
             </div>
             <div class="form-group">
               <div class="input-group input-group-alternative">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                 </div>
-                <input class="form-control" placeholder="Password" type="password">
+                <input formControlName="password" class="form-control" placeholder="Password" type="password" required>
               </div>
+              <small class="text-danger"
+                     *ngIf="registrationPassword.touched && registrationPassword.invalid"  >
+                This field is required</small>
             </div>
-            <div class="text-muted font-italic"><small>password strength: <span class="text-success font-weight-700">strong</span></small></div>
+            <div class="form-group">
+              <div class="input-group input-group-alternative">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                </div>
+                <input formControlName="cPassword" class="form-control" placeholder="Confirm Password" type="password" required>
+              </div>
+              <small class="text-danger"
+                     *ngIf="registrationcPassword.touched && registrationcPassword.invalid"  >
+                This field is required</small>
+
+              <span class="text-danger"
+                    *ngIf="signUpForm.errors && registrationcPassword.touched">
+                    <small *ngIf="signUpForm.errors.passwordMatch" > Passwords do not match</small>
+                <!-- registrationForm.status === 'INVALID' -->
+                </span>
+            </div>
+<!--            <div class="text-muted font-italic"><small>password strength: <span class="text-success font-weight-700">strong</span></small></div>-->
             <div class="row my-4">
               <div class="col-12">
                 <div class="custom-control custom-control-alternative custom-checkbox">
-                  <input class="custom-control-input" id="customCheckRegister" type="checkbox">
+                  <input  required formControlName="agree" class="custom-control-input" id="customCheckRegister" type="checkbox">
                   <label class="custom-control-label" for="customCheckRegister">
                     <span class="text-muted">I agree with the <a href="#!">Privacy Policy</a></span>
                   </label>
                 </div>
+                <small class="text-danger"
+                       *ngIf="agree.hasError('required')"  >
+                  You need to agree with the Privacy Policy</small>
               </div>
             </div>
             <div class="text-center">
-              <button type="button" class="btn btn-primary mt-4">Create account</button>
+              <button [disabled]="!signUpForm.valid" type="submit" class="btn btn-primary mt-4">Create account</button>
             </div>
           </form>
         </div>
