@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
     this.loginCheck = true;
     let returnData = this.loginService.checkUserLogin(loginForm.value)
       .subscribe(response => {
-          console.log('== response - ', response, ' type of ', response['token']);
+          console.log('== response - ', response);
 
           if (response['token'] !== '') {
             this.alertMessage = {
@@ -45,12 +45,12 @@ export class LoginComponent implements OnInit {
         (error: Response) => {
           this.alertMessage.type = 'danger';
           this.loginCheck = false;
-          console.log('Unexpected error occured ', error);
+          console.log('Unexpected error occurred ', error);
           if (error.status === 401) {
             this.alertMessage.message = "Either of you details is incorrect";
           }
           else {
-            this.alertMessage.message = "An Unexpected error occured";
+            this.alertMessage.message = "An Unexpected error occurred";
           }
           // this.loginError.status = true;
         });
@@ -81,6 +81,9 @@ export class LoginComponent implements OnInit {
       if (data.get('urltoRedirect') != '')
         this.urltoRedirect = data.get('urltoRedirect');
     });
+  }
+  getUrl() {
+    return "url('./assets/img/theme/login-back.jpg')";
   }
 
 }

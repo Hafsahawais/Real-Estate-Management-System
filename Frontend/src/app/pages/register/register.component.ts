@@ -83,5 +83,8 @@ export class RegisterComponent implements OnInit {
           }
         });
   }
+  getUrl() {
+    return "url('./assets/img/theme/login-back.jpg')";
+  }
 
 }
