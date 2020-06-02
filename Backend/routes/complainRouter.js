@@ -1,6 +1,6 @@
 const express = require("express");
 var router = express.Router();
-var complainController = require("../Controller/complain.controller");
+var complainController = require("../controller/complain.controller");
 
 router.get("/", complainController.AllComplainList);
 router.post("/new", complainController.AddComplain);

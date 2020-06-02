@@ -17,13 +17,12 @@ conn.on('connected', () => {
 
 
   async function userLogin (req, res) {
-    var loginType;
     if (req.body.email !== "" && req.body.password !== "") {
-      // if (isNaN(req.body.email)) loginType = "email";
-      // else loginType = "phoneNo";
-      await user
-          .findOne()
-          .where('email' || 'phoneNo', req.body.email)
+      let User = await user
+          .findOne({$or: [
+              {email: req.body.email},
+              {phoneNo: req.body.email}
+            ]})
           .exec((err, data) => {
             if (err) res.status(400).send(err);
             else if (data) {
@@ -44,7 +43,7 @@ conn.on('connected', () => {
                   var token = jwt.sign({user: jwtData}, secretKey);
                   res
                       .status(200)
-                      .json({message: "Login Successful", token: token});
+                      .json({message: "Login Successful", token: token, user: User});
                 } else res.status(401).json({message: "Invalid Credentials1"});
               });
             } else res.status(401).json({message: "Invalid Credentials2"});
