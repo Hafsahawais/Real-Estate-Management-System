@@ -34,7 +34,7 @@ const upload = multer({ storage });
 
 router.post('/user/login', authC.userLogin);
 //registration
-router.post('/user/register',upload.array("profileImages"), authC.userRegistration);
+router.post('/user/register', authC.userRegistration);
 
 //admin
 router.get('/admin/userList', authC.userList);

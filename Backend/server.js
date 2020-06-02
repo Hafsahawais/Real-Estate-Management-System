@@ -7,7 +7,6 @@ const morgan = require('morgan');
 const config = require('./config');
 var app = express();
 
-const startupdebug = require('debug')('app:startup');
 
 app.use(express.static(path.join(__dirname, 'uploads')));
 
@@ -17,10 +16,10 @@ var booking = require('./routes/bookingRouter');
 var property = require('./routes/propertyRouter');
 
 // Connect with DB
-mongoose.connect('mongodb://localhost/realEstatedb')
-  .then((conn) => // we're connected!
+mongoose.connect('mongodb://localhost/realEstatedb', { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => // we're connected!
   {
-    startupdebug('connected to dB');
+    console.log('connected to dB');
   })
   .catch(err => console.error('Connection Error', err));
 
@@ -32,8 +31,11 @@ app.use(bodyParser.json());
 // use morgan to log requests to the console
 app.use(morgan('dev'));
 //CORS
+var cors = require('cors');
+app.use(cors());
+
 app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT'); //,DELETE,OPTIONS
+  res.header('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT'); //,DELETE,OPTIONS
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
@@ -42,7 +44,7 @@ app.use(function(req, res, next) {
 // Routes
 app.use('/auth', users);
 app.use('/booking', booking);
-app.use('property', property);
+app.use('/property', property);
 
 //console.log(process.env.PORT); //.PORT, ' -port');
 // var tokenn = require('./config/config').secretKey;
