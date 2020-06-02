@@ -1,0 +1,174 @@
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url(../../../assets/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
+  <!-- Mask -->
+  <span class="mask bg-gradient-danger opacity-8"></span>
+  <!-- Header container -->
+  <div class="container-fluid d-flex align-items-center">
+    <div class="row w-100">
+      <div class="col-lg-7 col-md-10">
+        <h1 class="display-2 text-white">Add Project</h1>
+        <p class="text-white mt-0 mb-5">Post a new project</p>
+<!--        <a href="#" class="btn btn-info">Edit profile</a>-->
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col-xl-12 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">My account</h3>
+            </div>
+            <div class="col-4 text-right">
+              <a href="#!" class="btn btn-sm btn-primary">Settings</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="projectDetails" (ngSubmit)="submitForm()" enctype="multipart/form-data">
+            <h4>Project Info</h4>
+            <hr class="hr">
+            <div class="form-group">
+              <label> Upload images: <small class="text-info">(Auto-preview)</small> <small *ngIf="imgUrls.length;"
+                                                                                                   (click)="imgUrls.length = 0; imgsToUpload= []" class="p-cursor text-primary">(remove all)</small></label> <br>
+              <div *ngIf="!imgUrls.length; else imgBOx" class="dropbox">
+                <input type="file" multiple name="uploadFieldName"
+                       (change)="filesChange($event.target.name, $event.target.files)" accept="image/*" #photos>
+                <p>
+                  Drag your file(s) here to begin<br>
+                  or click to browse<br>
+                  <small>max size: 800kb (or else will be ignored)</small>
+                </p>
+                <!-- <p *ngIf="currentStatus === STATUS_SAVING">
+                  Uploading {{ photos.files.length }} files...
+                </p> -->
+              </div>
+              <ng-template #imgBOx>
+                <div class="row">
+                  <div *ngFor="let img of imgUrls" class="col-md-2">
+                    <div class="singlImg">
+                      <img title="{{img?.name}}" src="{{img.path}}" alt="img">
+                      <div title="{{img?.name}}" class="imgOverlay">
+                        <i (click)="removeSinglePic(img);" class="fa fa-times p-cursor" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </div>
+            <hr class="hr">
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-4">
+                  <label>Project Name: </label> <br>
+                  <input type="text" formControlName="name" class="form-control"
+                         style="-webkit-appearance: none;">
+                  <small class="text-danger" *ngIf="projectDetails.controls['name'].touched && projectDetails.controls['name'].hasError('required')">This field is required</small>
+                </div>
+                <div class="col-2">
+                  <label>Property price starting from:</label>
+                  <input type="text" placeholder="Eg. 50 Lacs" formControlName="priceForm" class="form-control"
+                         style="-webkit-appearance: none;">
+                  <small class="text-danger" *ngIf="projectDetails.controls['priceForm'].touched && projectDetails.controls['priceForm'].invalid">This field is required</small>
+                </div>
+                <div class="col-2">
+                  <label>Property price upto:</label>
+                  <input placeholder="Eg. 8.5 Crore" type="text" name="price" formControlName="priceTo" class="form-control"
+                         style="-webkit-appearance: none;">
+                  <small class="text-danger" *ngIf="projectDetails.controls['priceTo'].touched && projectDetails.controls['priceTo'].invalid">This field is required</small>
+                </div>
+              </div>
+            </div>
+
+            <!-- <div *ngIf="propertyFormData.type == '5abbd8585536e81408846d6f'"> -->
+<!--            <h5>Additional Data -</h5>-->
+<!--            <hr class="hr">-->
+
+            <!-- </div> -->
+
+            <h4>Location Details</h4>
+            <hr class="hr">
+
+            <div class="form-row">
+              <div class="form-group col-md-9">
+                <label>Location: <small><i class="fa fa-refresh fa-spin fa-fw"></i></small></label>
+                <input formControlName="location" required placeholder="Enter Location" class="form-control">
+
+                <small class="text-danger" *ngIf="projectDetails.controls['location'].touched && projectDetails.controls['location'].invalid">
+                  This field is required</small>
+              </div>
+              <div class="form-group col-md-3">
+                <label>City:</label>
+                <input type="text" formControlName="city" required placeholder="Enter City" class="form-control">
+                <small class="text-danger" *ngIf="projectDetails.controls['city'].touched && projectDetails.controls['city'].invalid">
+                  This field is required</small>
+              </div>
+            </div>
+
+            <h4>Other Information</h4>
+            <hr class="hr">
+
+            <div class="row">
+              <div class="form-group col-md-12">
+                <label>Description: <small class="text-primary">({{ 500 - projectDetails.controls['description'].value?.length | number }}) </small>
+<!--                  <app-small-components [componentName]="'moreInfoQstnMark'"-->
+<!--                                        [toolTipData]="{ position: 'right', text: 'max number of letters - 500' }"></app-small-components>-->
+                </label>
+                <textarea formControlName="description" required
+                          class="form-control" resize="none" cols="30" maxlength="500" rows="5"></textarea>
+
+                <small class="text-danger" *ngIf="projectDetails.controls['description'].touched && projectDetails.controls['description'].invalid">
+                  This field is required</small>
+              </div>
+              <div class="form-group col-md-6">
+                <label>Property Types:
+                  <select required formControlName="propertyTypes" class="custom-select">
+                    <option value="">Select Property Type</option>
+                    <option value="All">All</option>
+                    <option value="Flats">Flats</option>
+                    <option value="Apartments">Apartments</option>
+                    <option value="Houses">Houses</option>
+                    <option value="Bungalows">Bungalows</option>
+                  </select>
+                  <small class="text-danger" *ngIf="projectDetails.controls['propertyTypes'].touched && projectDetails.controls['propertyTypes'].invalid">
+                    This field is required</small>
+                </label>
+              </div>
+            </div>
+
+            <h4>Contact Information</h4>
+            <hr>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label>Builders Name:</label>
+                <input type="text" placeholder="Enter Builders Name" formControlName="builder" required class="form-control">
+                <small class="text-danger" *ngIf="projectDetails.controls['builder'].touched && projectDetails.controls['builder'].invalid">
+                  This field is required</small>
+              </div>
+              <div class="form-group col-md-4">
+                <label>Email:</label>
+                <input type="text" placeholder="Enter Email" formControlName="email" required
+                       value="{{userService.currentUser.user.email}}" class="form-control">
+                <small class="text-danger" *ngIf="projectDetails.controls['email'].touched && projectDetails.controls['email'].invalid">
+                  This field is required</small>
+              </div>
+              <div class="form-group col-md-4">
+                <label>Phone Number: </label>
+                <input type="text" required formControlName="phoneNo" placeholder="Enter Phone Number"
+                       value="{{userService.currentUser.user.phoneNo}}" class="form-control">
+                <small class="text-danger" *ngIf="projectDetails.controls['phoneNo'].touched && projectDetails.controls['phoneNo'].invalid">
+                  This field is required</small>
+              </div>
+            </div>
+
+
+            <button [disabled]="projectDetails.invalid || isSubmittingForm" class="btn btn-danger btn-block"> <i *ngIf="isSubmittingForm"
+                                                                                                    class="fa fa-spinner fa-spin" aria-hidden="true"></i> Post a New Property</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

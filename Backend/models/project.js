@@ -14,18 +14,53 @@ const project = new Schema ({
   imgPath: {
     type: String
   },
+  priceFrom: {
+    type: Number,
+    required: true
+  },
+  priceTo: {
+    type: Number,
+    required: true
+  },
   location: {
     type: String,
     required: true
   },
+  city: {
+    type: String,
+    required: true
+  },
+  builder: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true
+  },
+  phoneNo: {
+    type: String,
+    required: true
+  },
+  propertyTypes: {
+    type: String,
+    required: true,
+  },
   description: {
     type: String
   },
-  is_active: {
-    type: Boolean,
-    default: true
+  properties: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'property'
+    }
+  ],
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    required: true,
   },
-});
+},{timestamps: true});
 
 var Project = mongoose.model('project', project);
 module.exports = Project;
