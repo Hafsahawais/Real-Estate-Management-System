@@ -1,20 +1,12 @@
 const express = require('express');
 var path = require('path');
-const bodyParser = require("body-parser");
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
-//remove this_frontend module
-//const exphbs = require("express-handlebars");
 
 const config = require('./config');
 var app = express();
 
-// Handlebars Middleware
-//remove below two lines these are used for front-end
-// app.engine("handlebars", exphbs({ defaultLayout: "main" }));
-// app.set("view engine", "handlebars");
-
-const startupdebug = require('debug')('app:startup');
 
 app.use(express.static(path.join(__dirname, 'uploads')));
 app.use(bodyParser.json());
@@ -26,10 +18,10 @@ var complainRouter = require("./routes/complainRouter");
 var chargeRouter = require("./routes/chargeRouter");
 var paymentRouter = require("./routes/paymentRouter")
 // Connect with DB
-mongoose.connect('mongodb://localhost/realEstatedb')
-  .then((conn) => // we're connected!
+mongoose.connect('mongodb://localhost/realEstatedb', { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => // we're connected!
   {
-    startupdebug('connected to dB');
+    console.log('connected to dB');
   })
   .catch(err => console.error('Connection Error', err));
 
@@ -38,15 +30,14 @@ mongoose.connect('mongodb://localhost/realEstatedb')
 // this will let us get the data from a POST
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-// Set Static Folder
-app.use(express.static(`${__dirname}/public`));
-
 // use morgan to log requests to the console
 app.use(morgan('dev'));
 //CORS
+var cors = require('cors');
+app.use(cors());
+
 app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT'); //,DELETE,OPTIONS
+  res.header('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT'); //,DELETE,OPTIONS
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();

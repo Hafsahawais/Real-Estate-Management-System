@@ -30,12 +30,7 @@ const user = new Schema ({
     required: true
   },
   city: {
-    type: Schema.Types.ObjectId,
-    ref: 'city'
-  },
-  userType: {
-    type: Number,
-    default: 1
+    type: String
   },
   updatedOn: {
     type: Date,
@@ -44,12 +39,12 @@ const user = new Schema ({
   createdOn: {
     type: Date
   },
-  images: {
-    type: [String]
-  },
-  imgPath: {
-    type: String
-  },
+  // images: {
+  //   type: [String]
+  // },
+  // imgPath: {
+  //   type: String
+  // },
   admin: {
     type: Boolean,
     default: false

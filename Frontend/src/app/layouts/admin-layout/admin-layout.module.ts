@@ -16,27 +16,32 @@ import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {FlexLayoutModule} from "@angular/flex-layout";
+import {AddPropertyComponent} from "../../pages/add-property/add-property.component";
+import {AddProjectComponent} from "../../pages/add-project/add-project.component";
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule.forChild(AdminLayoutRoutes),
-    FormsModule,
-    HttpClientModule,
-    NgbModule,
-    ClipboardModule,
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule,
-    FlexLayoutModule
-  ],
+    imports: [
+        CommonModule,
+        RouterModule.forChild(AdminLayoutRoutes),
+        FormsModule,
+        HttpClientModule,
+        NgbModule,
+        ClipboardModule,
+        MatCardModule,
+        MatButtonModule,
+        MatIconModule,
+        FlexLayoutModule,
+        ReactiveFormsModule
+    ],
   declarations: [
     DashboardComponent,
     UserProfileComponent,
     TablesComponent,
     IconsComponent,
-    MapsComponent
+    MapsComponent,
+    AddPropertyComponent,
+    AddProjectComponent
   ]
 })
 
