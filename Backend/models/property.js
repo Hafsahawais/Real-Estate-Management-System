@@ -78,14 +78,6 @@ const Property = mongoose.model('property', new mongoose.Schema({
   imgPath: {
     type: String
   },
-  updatedOn: {
-    type: Date,
-    default: Date.now()
-  },
-  createdOn: {
-    type: Date,
-    default: Date.now()
-  }
-}) );
+},{timestamps: true}) );
 
 module.exports = Property;

@@ -32,10 +32,6 @@ const user = new Schema ({
   city: {
     type: String
   },
-  userType: {
-    type: Number,
-    default: 1
-  },
   updatedOn: {
     type: Date,
     default: Date.now()
@@ -43,12 +39,12 @@ const user = new Schema ({
   createdOn: {
     type: Date
   },
-  images: {
-    type: [String]
-  },
-  imgPath: {
-    type: String
-  },
+  // images: {
+  //   type: [String]
+  // },
+  // imgPath: {
+  //   type: String
+  // },
   admin: {
     type: Boolean,
     default: false

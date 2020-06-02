@@ -6,6 +6,7 @@ import { MapsComponent } from '../../pages/maps/maps.component';
 import { UserProfileComponent } from '../../pages/user-profile/user-profile.component';
 import { TablesComponent } from '../../pages/tables/tables.component';
 import {AddPropertyComponent} from "../../pages/add-property/add-property.component";
+import {AddProjectComponent} from "../../pages/add-project/add-project.component";
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -14,5 +15,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'icons',          component: IconsComponent },
     { path: 'maps',           component: MapsComponent },
     { path: 'add-property',   component: AddPropertyComponent },
+    { path: 'add-project',    component: AddProjectComponent },
+
 
 ];

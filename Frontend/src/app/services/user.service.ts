@@ -26,7 +26,7 @@ export class UserService {
   }
 
   signUp(body) {
-    return this.http.post(this.commonService.base_url + '/user/register', body);
+    return this.http.post(this.commonService.base_url + '/auth/user/register', body);
   }
 
 }

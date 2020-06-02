@@ -8,6 +8,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {UserService} from "../services/user.service";
 import {CommonService} from "../services/common.service";
 import {RegistrationValidators} from "../validators/registration.validators";
+import {LoginService} from "../services/login.service";
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import {RegistrationValidators} from "../validators/registration.validators";
   providers: [
     UserService,
     CommonService,
-    RegistrationValidators
+    RegistrationValidators,
+    LoginService
   ]
 })
 export class ComponentsModule { }

@@ -7,7 +7,6 @@ const morgan = require('morgan');
 const config = require('./config');
 var app = express();
 
-const startupdebug = require('debug')('app:startup');
 
 app.use(express.static(path.join(__dirname, 'uploads')));
 
@@ -17,10 +16,10 @@ var booking = require('./routes/bookingRouter');
 var property = require('./routes/propertyRouter');
 
 // Connect with DB
-mongoose.connect('mongodb://localhost/realEstatedb')
-  .then((conn) => // we're connected!
+mongoose.connect('mongodb://localhost/realEstatedb', { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => // we're connected!
   {
-    startupdebug('connected to dB');
+    console.log('connected to dB');
   })
   .catch(err => console.error('Connection Error', err));
 
