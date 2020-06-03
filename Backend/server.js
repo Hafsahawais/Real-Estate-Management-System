@@ -2,6 +2,7 @@ const express = require('express');
 var path = require('path');
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
+const cors = require('cors');
 const morgan = require('morgan');
 //remove this_frontend module
 //const exphbs = require("express-handlebars");
@@ -18,13 +19,14 @@ const startupdebug = require('debug')('app:startup');
 
 app.use(express.static(path.join(__dirname, 'uploads')));
 app.use(bodyParser.json());
+app.use(cors());
 // Routing
 var users = require('./routes/userRouter');
 var booking = require('./routes/bookingRouter');
 var property = require('./routes/propertyRouter');
 var complainRouter = require("./routes/complainRouter");
-var chargeRouter = require("./routes/chargeRouter");
-var paymentRouter = require("./routes/paymentRouter")
+var paymentRouter = require("./routes/paymentRouter");
+var subscriptionRouter = require("./routes/subscriptionRouter");
 // Connect with DB
 mongoose.connect('mongodb://localhost/realEstatedb')
   .then((conn) => // we're connected!
@@ -57,8 +59,8 @@ app.use('/auth', users);
 app.use('/booking', booking);
 app.use('/property', property);
 app.use("/complains", complainRouter);
-app.use("/payment", paymentRouter);
-app.use("/charge", chargeRouter);
+app.use('/pay', paymentRouter);
+app.use('/sub', subscriptionRouter);
 
 //console.log(process.env.PORT); //.PORT, ' -port');
 // var tokenn = require('./config/config').secretKey;
