@@ -18,7 +18,7 @@ conn.on('connected', () => {
 
   async function userLogin (req, res) {
     if (req.body.email !== "" && req.body.password !== "") {
-      let User = await user
+      await user
           .findOne({$or: [
               {email: req.body.email},
               {phoneNo: req.body.email}
@@ -43,7 +43,7 @@ conn.on('connected', () => {
                   var token = jwt.sign({user: jwtData}, secretKey);
                   res
                       .status(200)
-                      .json({message: "Login Successful", token: token, user: User});
+                      .json({message: "Login Successful", token: token, user: data});
                 } else res.status(401).json({message: "Invalid Credentials1"});
               });
             } else res.status(401).json({message: "Invalid Credentials2"});

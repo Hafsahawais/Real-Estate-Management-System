@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-maps',
-  templateUrl: './maps.component.html',
-  styleUrls: ['./maps.component.scss']
+  selector: 'app-property-list',
+  templateUrl: './property-list.component.html',
+  styleUrls: ['./property-list.component.scss']
 })
-export class MapsComponent implements OnInit {
+export class PropertyListComponent implements OnInit {
 
   public copy: string;
   properties: Array<any> = [];
