@@ -4,7 +4,7 @@ var fs = require('fs');
 var http = require('http');
 var Project = require('../models/project');
 const helpers = require('../provider/helper');
-
+var property = require('../models/property');
 
 var gfs;
 var conn = mongoose.connection;
@@ -35,6 +35,13 @@ module.exports = {
             req.body.name = req.body.projectname;
             req.body.description = req.body.descr;
             req.body.location = req.body.address;
+            req.body.priceFrom = req.body.pricefrom;
+            req.body.priceTo= req.body.priceto;
+            req.body.builder = req.body.builders;
+            req.body.email = req.body.emails;
+            req.body.phoneNo  = req.body.pno;
+            req.body.propertyTypes = req.body.proptype;
+            req.body.properties = property._id;
             req.body.images = imgs;
             req.body.imgPath = 'properties';
 
@@ -60,6 +67,12 @@ module.exports = {
             Project.description = req.body.description;
             Project.location = req.body.location;
             Project.images = imgs;
+            Project.priceFrom = req.body.priceFrom;
+            Project.priceTo= req.body.priceTo;
+            Project.builder = req.body.builder;
+            Project.email = req.body.email;
+            Project.phoneNo  = req.body.phoneNo;
+            Project.propertyTypes = req.body.propertyTypes;
             Project.imgPath = 'projects';
 
             Project.save((err, data) => {

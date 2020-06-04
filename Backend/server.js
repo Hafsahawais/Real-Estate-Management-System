@@ -16,7 +16,9 @@ var booking = require('./routes/bookingRouter');
 var property = require('./routes/propertyRouter');
 var complainRouter = require("./routes/complainRouter");
 var chargeRouter = require("./routes/chargeRouter");
-var paymentRouter = require("./routes/paymentRouter")
+var paymentRouter = require("./routes/paymentRouter");
+var facilityRouter = require("./routes/facilityRouter");
+
 // Connect with DB
 mongoose.connect('mongodb://localhost/realEstatedb', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => // we're connected!
@@ -50,6 +52,8 @@ app.use('/property', property);
 app.use("/complains", complainRouter);
 app.use("/payment", paymentRouter);
 app.use("/charge", chargeRouter);
+app.use("/facility", facilityRouter);
+
 
 //console.log(process.env.PORT); //.PORT, ' -port');
 // var tokenn = require('./config/config').secretKey;
