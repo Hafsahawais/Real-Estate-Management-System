@@ -65,20 +65,20 @@ module.exports = {
   },
   getUserList: (req, res) => {
     Property.find({ isActive: true, userId: req.params.userId })
-        .populate('city', 'name')
-        .populate('type', 'title')
-        .exec((err, result) => {
-          if (err)
-            res.status(400).send(err);
-          else
-            res.status(200).json(result);
-        });
+      .populate('city', 'name')
+      .populate('type', 'title')
+      .exec((err, result) => {
+        if (err)
+          res.status(400).send(err);
+        else
+          res.status(200).json(result);
+      });
   },
   getSingleProperty: async (req, res) => {
     try{
       var result  = await Property.findOne({ slug: req.params.propertySlug })
-          .populate('city', 'name')
-          .populate('type', 'title');
+        .populate('city', 'name')
+        .populate('type', 'title');
 
       var files = [];
       if(result && result.images.length){

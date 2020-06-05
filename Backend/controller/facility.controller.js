@@ -6,7 +6,7 @@ var facility = require('../models/facilities');
 var user = require('../models/user');
 
 module.exports = {
-    vehicleRegisteration: (req, res) => {
+    vehicleRegistration: (req, res) => {
         var vehicle = new facility();
         user.find({_id: req.params.userId}, (err,result) => {
             if (user.$id === req.body._id) {
