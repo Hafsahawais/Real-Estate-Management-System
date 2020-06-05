@@ -98,7 +98,7 @@ conn.on('connected', () => {
         res.status(400).send({'message': 'Please agree with the privacy policy'})
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       res.status(400).send({'message': 'Unprocess entity'});
     }
 
