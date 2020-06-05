@@ -94,8 +94,6 @@ module.exports = {
   },
   getFullList: (req, res) => {
     Property.find({ isActive: true })
-      .populate('city', 'name')
-      .populate('type', 'title')
       .populate('userId', 'name')
       .exec((err, result) => {
         if (err)
@@ -120,7 +118,7 @@ module.exports = {
     // console.log('propertyFor ', req.query.propertyFor, typeof req.query.propertyFor);
     // console.log(req.query.propertyFor.split(","));
     var query = {};
-    // query['isActive'] = true;
+    query['isActive'] = true;
 
     if (req.query.propertyFor)
       query['propertyFor'] = { $in: req.query.propertyFor.split(",") };
