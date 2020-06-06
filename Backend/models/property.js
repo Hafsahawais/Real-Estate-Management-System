@@ -16,8 +16,7 @@ const Property = mongoose.model('property', new mongoose.Schema({
     type: String
   },
   type: {
-    type: Schema.Types.ObjectId,
-    ref: 'property_type'
+    type: String
   },
   city: {
     type: String
@@ -28,13 +27,10 @@ const Property = mongoose.model('property', new mongoose.Schema({
     required: true
   },
   breadth: {
-    type: Number,locality: {
-      type: String,
-      required: true
-    },
+    type: Number,
     required: true
   },
-  cornrPlot: {
+  cornerPlot: {
     type: Boolean,
     default: false,
     enum: [true, false]

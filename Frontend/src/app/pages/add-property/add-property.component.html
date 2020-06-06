@@ -129,12 +129,13 @@
                 </div>
                 <div class="col-4">
                   <label for="">Property Type:</label>
-<!--                  <select required name="Proptype" ngModel #Proptype="ngModel" class="custom-select">-->
-<!--                    <option value="">Select Property Type</option>-->
-<!--                    <option *ngFor="let property of propertyTypeList" value="{{property._id}}">{{property.title}}</option>-->
-<!--                  </select>-->
-                  <input type="text" name="Proptype" ngModel #Proptype="ngModel" class="form-control"
-                         style="-webkit-appearance: none;">
+                  <select required name="Proptype" ngModel #Proptype="ngModel" class="custom-select">
+                    <option value="">Select Property Type</option>
+                    <option value="Flat">Flats</option>
+                    <option value="Apartment">Apartments</option>
+                    <option value="House">Houses</option>
+                    <option value="Bungalow">Bungalows</option>
+                  </select>
                   <small class="text-danger" *ngIf="Proptype.touched && Proptype.invalid">This field is required</small>
                 </div>
                 <div class="col-4">
@@ -175,9 +176,9 @@
               <div class="col-md-2">
                 <p>Corner Plot?</p>
                 <div class="custom-control custom-checkbox">
-                  <input class="custom-control-input" ngModel #cornrPlot="ngModel" name="cornrPlot" value="true"
-                         id="cornrPlotId" type="checkbox">
-                  <label class="custom-control-label" for="cornrPlotId">Yes</label>
+                  <input class="custom-control-input" ngModel #cornerPlot="ngModel" name="cornerPlot" value="true"
+                         id="cornerPlotId" type="checkbox">
+                  <label class="custom-control-label" for="cornerPlotId">Yes</label>
                 </div>
               </div>
               <div>
@@ -210,26 +211,26 @@
                 <small class="text-danger" *ngIf="locality.touched && locality.invalid">
                   This field is required</small>
               </div>
-              <div class="form-group col-md-4">
-                <label>Is it a Society?</label> <br>
-                <label> <input type="radio" ngModel #isSociety="ngModel" required name="isSociety" value="true"> Yes </label>
-                &nbsp;
-                <label> <input type="radio" ngModel #isSociety="ngModel" required name="isSociety" value="false"> No </label>
-              </div>
-              <div [hidden]="isSociety.value != 'true'" class="form-group col-md-4">
-                <label for="">Society Name:</label>
-                <input type="text" name="societyName" [appInputFormat]="'capitalize'" ngModel #societyName="ngModel"
-                       [required]="isSociety.value == 'true'" placeholder="Enter Society Name" class="form-control">
-                <small class="text-danger" *ngIf="societyName.touched && societyName.invalid">
-                  This field is required</small>
-              </div>
-              <div [hidden]="isSociety.value != 'true'" class="form-group col-md-4">
-                <label for="">Flat No.:</label>
-                <input type="text" name="flatNo" ngModel #flatNo="ngModel" [required]="isSociety.value == 'true'"
-                       placeholder="Enter Flat Number" class="form-control">
-                <small class="text-danger" *ngIf="flatNo.touched && flatNo.invalid">
-                  This field is required</small>
-              </div>
+<!--              <div class="form-group col-md-4">-->
+<!--                <label>Is it a Society?</label> <br>-->
+<!--                <label> <input type="radio" ngModel #isSociety="ngModel" required name="isSociety" value="true"> Yes </label>-->
+<!--                &nbsp;-->
+<!--                <label> <input type="radio" ngModel #isSociety="ngModel" required name="isSociety" value="false"> No </label>-->
+<!--              </div>-->
+<!--              <div [hidden]="isSociety.value != 'true'" class="form-group col-md-4">-->
+<!--                <label for="">Society Name:</label>-->
+<!--                <input type="text" name="societyName" [appInputFormat]="'capitalize'" ngModel #societyName="ngModel"-->
+<!--                       [required]="isSociety.value == 'true'" placeholder="Enter Society Name" class="form-control">-->
+<!--                <small class="text-danger" *ngIf="societyName.touched && societyName.invalid">-->
+<!--                  This field is required</small>-->
+<!--              </div>-->
+<!--              <div [hidden]="isSociety.value != 'true'" class="form-group col-md-4">-->
+<!--                <label for="">Flat No.:</label>-->
+<!--                <input type="text" name="flatNo" ngModel #flatNo="ngModel" [required]="isSociety.value == 'true'"-->
+<!--                       placeholder="Enter Flat Number" class="form-control">-->
+<!--                <small class="text-danger" *ngIf="flatNo.touched && flatNo.invalid">-->
+<!--                  This field is required</small>-->
+<!--              </div>-->
             </div>
 
             <h4>Other Information -</h4>
@@ -277,7 +278,7 @@
                                       [toolTipData]="{ position: 'right', text: 'On the basics of values entered above' }"></app-small-components>
               </label>
               <input type="text" #title="ngModel" name="title" (change)="log(title.value)"
-                     [ngModel]="(cornrPlot.value ? 'Corner ' : '') + getDataTitleViaId(Proptype.value, 'propertyTypeList', 'title') + (societyName?.value ? ' at ' +  societyName.value : '') + (city.value ? ' in ' + city.value : '')"
+                     [ngModel]="(cornerPlot.value ? 'Corner ' : '') + getDataTitleViaId(Proptype.value, 'propertyTypeList', 'title') + (societyName?.value ? ' at ' +  societyName.value : '') + (city.value ? ' in ' + city.value : '')"
                      placeholder="Enter property's title" required class="form-control">
 
               <small class="text-danger" *ngIf="title.touched && title.invalid">

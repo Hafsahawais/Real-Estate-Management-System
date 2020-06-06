@@ -46,8 +46,8 @@ module.exports = {
       //Creating slug for the listing
       var slug  = await helpers.slugGenerator(req.body.title, 'title', 'property');
       req.body.slug = slug;
-      req.body.type = req.body.proptype;
-      req.body.cornrPlot = req.body.cornrPlot ? true : false;
+      req.body.type = req.body.Proptype;
+      req.body.cornerPlot = req.body.cornerPlot ? true : false;
       req.body.images = imgs;
       req.body.imgPath = 'properties';
 
