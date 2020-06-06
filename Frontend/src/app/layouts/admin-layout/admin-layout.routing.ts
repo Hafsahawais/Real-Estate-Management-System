@@ -7,6 +7,7 @@ import { UserProfileComponent } from '../../pages/user-profile/user-profile.comp
 import { ComplaintsComponent } from '../../pages/complaints/complaints.component';
 import {AddPropertyComponent} from "../../pages/add-property/add-property.component";
 import {AddProjectComponent} from "../../pages/add-project/add-project.component";
+import {SinglePropertyComponent} from "../../pages/single-property/single-property.component";
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -16,6 +17,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'properties',     component: PropertyListComponent },
     { path: 'add-property',   component: AddPropertyComponent },
     { path: 'add-project',    component: AddProjectComponent },
-
-
+    { path: 'single-property',    component: SinglePropertyComponent },
 ];
