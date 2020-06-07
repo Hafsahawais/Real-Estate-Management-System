@@ -1,17 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {CommonService} from "../../services/common.service";
+import {UserService} from "../../services/user.service";
+import {HttpClient} from "@angular/common/http";
+import {Router} from "@angular/router";
+import {LoginService} from "../../services/login.service";
 
 @Component({
-  selector: 'app-project-list',
-  templateUrl: './project-list.component.html',
-  styleUrls: ['./project-list.component.scss']
+  selector: 'app-single-property',
+  templateUrl: './single-property.component.html',
+  styleUrls: ['./single-property.component.scss']
 })
-export class ProjectListComponent implements OnInit {
+export class SinglePropertyComponent implements OnInit, OnChanges {
 
   public copy: string;
-  projects: Array<any> = [];
+  properties = [];
+  propertyList = [];
+  @Input('queryParams') queryParams = '';
+  @Input('hideOwnProperty') hideOwnProperty = false;
 
-  constructor() {
-    this.projects = [
+  constructor(
+    private commonService: CommonService,
+    private loginService: LoginService,
+    private userService: UserService,
+    private router: Router,
+    private http: HttpClient
+  ) {
+    this.properties = [
       {
         imgSrc: '../../../assets/img/theme/team-1-800x800.jpg',
         name: 'Cozy 5 Stars Apartment',
@@ -43,26 +57,29 @@ export class ProjectListComponent implements OnInit {
         location: 'Quetta, Pakistan',
         status: 'Active',
         description: 'The place is close to Metro Station and bus stop just 2 min by walk and near to "Naviglio" where you can enjoy the night life in London, UK.'
-      },
-      {
-        imgSrc: '../../../assets/img/theme/team-4-800x800.jpg',
-        name: 'Home Studio',
-        price: 'Rs. 400,000',
-        location: 'Quetta, Pakistan',
-        status: 'Active',
-        description: 'The place is close to Metro Station and bus stop just 2 min by walk and near to "Naviglio" where you can enjoy the night life in London, UK.'
-      },
-      {
-        imgSrc: '../../../assets/img/theme/team-4-800x800.jpg',
-        name: 'Home Studio',
-        price: 'Rs. 400,000',
-        location: 'Quetta, Pakistan',
-        status: 'Active',
-        description: 'The place is close to Metro Station and bus stop just 2 min by walk and near to "Naviglio" where you can enjoy the night life in London, UK.'
       }
     ];
   }
 
   ngOnInit() {
+    this.getPropertyList(this.queryParams);
   }
+
+  ngOnChanges() {
+    this.getPropertyList(this.queryParams);
+  }
+
+  getPropertyList(params: any = '') {
+    this.commonService.togglePageLoaderFn(true);
+    if (this.hideOwnProperty && this.userService.currentUser && this.userService.currentUser.user._id) params = this.queryParams ? `${params}&notUserId=${this.userService.currentUser.user._id}` : `?notUserId=${this.userService.currentUser.user._id}`;
+    console.log('final query ', params);
+    this.commonService.filterProperties(params)
+      .subscribe((result: any) => {
+          if (result) this.propertyList = result;
+          console.log('propertyList: ', this.propertyList);
+        }, (err) => console.log({ err }),
+        () => this.commonService.togglePageLoaderFn(false));
+
+  }
+
 }
