@@ -18,6 +18,8 @@ import {MatIconModule} from "@angular/material/icon";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {AddPropertyComponent} from "../../pages/add-property/add-property.component";
 import {AddProjectComponent} from "../../pages/add-project/add-project.component";
+import {SinglePropertyComponent} from "../../pages/single-property/single-property.component";
+import {SingleProjectComponent} from "../../pages/single-project/single-project.component";
 
 @NgModule({
     imports: [
@@ -40,7 +42,9 @@ import {AddProjectComponent} from "../../pages/add-project/add-project.component
     ProjectListComponent,
     PropertyListComponent,
     AddPropertyComponent,
-    AddProjectComponent
+    AddProjectComponent,
+    SinglePropertyComponent,
+    SingleProjectComponent
   ]
 })
 
