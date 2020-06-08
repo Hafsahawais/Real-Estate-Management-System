@@ -6,11 +6,11 @@ import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 
 @Component({
-  selector: 'app-project-list',
-  templateUrl: './project-list.component.html',
-  styleUrls: ['./project-list.component.scss']
+  selector: 'app-project-list-home',
+  templateUrl: './project-list-home.component.html',
+  styleUrls: ['./project-list-home.component.scss']
 })
-export class ProjectListComponent implements OnInit {
+export class ProjectListHomeComponent implements OnInit {
 
   public copy: string;
   projects: Array<any> = [];

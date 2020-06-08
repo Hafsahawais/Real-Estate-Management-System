@@ -7,6 +7,8 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import {HomeComponent} from "./pages/home/home.component";
 import {SinglePropertyComponentNewUser} from "./pages/single-property-new-user/single-property-component-new-user.component";
+import {ProjectListHomeComponent} from "./pages/project-list-home/project-list-home.component";
+import {SingleProjectComponentNewUser} from "./pages/single-project-new-user/single-project-component-new-user.component";
 
 const routes: Routes =[
   {
@@ -16,6 +18,12 @@ const routes: Routes =[
   },{
     path: 'property/:id',
     component: SinglePropertyComponentNewUser
+  },{
+    path: 'project/:id',
+    component: SingleProjectComponentNewUser
+  },{
+    path: 'projects',
+    component: ProjectListHomeComponent
   }, {
     path: '',
     component: AdminLayoutComponent,
