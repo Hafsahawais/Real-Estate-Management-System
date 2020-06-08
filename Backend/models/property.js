@@ -79,6 +79,11 @@ const Property = mongoose.model('property', new mongoose.Schema({
   imgPath: {
     type: String
   },
+  projectId: {
+    type: Schema.Types.ObjectId,
+    ref: 'project'
+  },
+
 },{timestamps: true}) );
 
 module.exports = Property;

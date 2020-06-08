@@ -10,10 +10,10 @@ const booking = new Schema ({
     type: Schema.Types.ObjectId,
     ref : 'property'
   },
-  user_id: {
-    type: Schema.Types.ObjectId,
-    ref : 'users'
-  },
+  // user_id: {
+  //   type: Schema.Types.ObjectId,
+  //   ref : 'user'
+  // },
   isActive: {
     type: Boolean,
     default: true

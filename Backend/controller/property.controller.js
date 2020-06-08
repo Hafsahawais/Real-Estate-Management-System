@@ -63,10 +63,52 @@ module.exports = {
       res.status(400).json({message: err.message});
     }
   },
+  addPropertyToProject: (req, res) => {
+
+    Property.find({_id: req.params.projectId}).exec((err, resp) => {
+      let imgs = [];
+      if (req.files && req.files.length)
+        req.files.forEach(ele => imgs.push(ele.filename));
+
+      Property.title = req.body.title;
+      Property.description = req.body.description;
+      Property.location = req.body.location;
+      Property.images = imgs;
+      Property.propertyFor = req.body.propertyFor;
+      Property.length= req.body.length;
+      Property.breadth= req.body.breadth;
+      Property.cornerPlot = req.body.cornerPlot ? true : false;
+      Property.price = req.body.price;
+      Property.status = req.body.status;
+      Property.bookingId = req.body.bookingId;
+      Property.address = req.body.address;
+      Property.email = req.body.email;
+      Property.phoneNo  = req.body.phoneNo;
+      Property.propertyTypes = req.body.propertyTypes;
+      Property.imgPath = 'properties';
+
+      Property.save((err, data) => {
+        if (err) res.status(400).send(err);
+        else
+          res
+              .status(200)
+              .json({message: "Property Added Successfully to the project", id: data._id});
+      });
+
+
+    })
+    // new Promise((resolve, reject) => {
+    //     return Project.findOne({ _id: req.body._id })
+    // })
+    //     .then(resp => {
+    //         res.status(200).json({resp});
+    //     })
+    //     .catch()
+  },
   getUserList: (req, res) => {
     Property.find({ isActive: true, userId: req.params.userId })
-      .populate('city', 'name')
-      .populate('type', 'title')
+      .populate('userId')
+
       .exec((err, result) => {
         if (err)
           res.status(400).send(err);
@@ -74,10 +116,34 @@ module.exports = {
           res.status(200).json(result);
       });
   },
+  getPropertyForProject: async (req, res) => {
+    try{
+      var result  = await Property.findOne({ _id: req.params.projectId })
+          .populate('projectId');
+      if(result) res.status(200).json({result});
+      else throw new Error('Something Went Wrong');
+    }
+    catch(err){
+      res.status(400).json({message: err.message});
+    }
+
+  },
+  getMyProperty: async (req, res) => {
+    try{
+      var result  = await Property.findOne({ _id: req.params.userId })
+          .populate('userId');
+      if(result) res.status(200).json({result});
+      else throw new Error('Something Went Wrong');
+    }
+    catch(err){
+      res.status(400).json({message: err.message});
+    }
+
+  },
   getSingleProperty: async (req, res) => {
     try{
       var result  = await Property.findOne({ _id: req.params.propertyId })
-          .populate('userId')
+          .populate('userId');
       if(result) res.status(200).json({result});
       else throw new Error('Something Went Wrong');
     }
@@ -87,8 +153,8 @@ module.exports = {
 
   },
   getFullList: (req, res) => {
-    Property.find({ isActive: true })
-      .populate('userId', 'name')
+    Property.find({ isActive: true, projectId: null})
+      .populate('userId')
       .exec((err, result) => {
         if (err)
           res.status(400).send(err);
@@ -98,9 +164,9 @@ module.exports = {
   },
   markAsSold: async (req, res) => {
     try{
-      const result = await Property.update({ slug: req.params.propertySlug }, { status: req.body.status });
+      const result = await Property.findOneAndUpdate({ _id: req.body._id }, { status: req.body.status , userId: req.body.userId });
       console.log({result});
-      if(result && result.nModified === 1) res.status(200).json({ result, message: "Property has been updated Successfully" });
+      if(result && result.nModified === 1 && status === 'Sold') res.status(200).json({ result, message: "Property has been updated Successfully" });
       else throw new Error('Error in updating property');
     }
     catch(err){
@@ -128,9 +194,7 @@ module.exports = {
       query['status'] = { $in: req.query.status.split(",") };
     console.log({ query });
     Property.find(query)
-      .populate('city', 'name')
-      .populate('type', 'title')
-      .populate('userId', 'name')
+      .populate('userId')
       .exec((err, result) => {
         if (err)
           res.status(400).send(err);

@@ -6,33 +6,37 @@ require('mongoose-currency').loadType(mongoose);
 const utilitySchema = new Schema ({
     month:{
         type: Date(),
-        required:true
     },
     paid:{
      type: Boolean,
-        required:true
     },
     charges:{
         type: Number,
-        required:true
     },
 
 });
 const utility = new Schema ({
-    maintainence_details:[
-    utilitySchema
-    ],
-    electricity_details:[
-    utilitySchema
-    ],
-    gas_details:{
-        year:
-            {
-                type: Date()
-            },
-        details:[
-            utilitySchema
-        ]
+    property_id: {
+        type: Schema.Types.ObjectId,
+        ref: 'property'
+    },
+    maintenance_details: {
+        year: {
+            type: Date()
+        },
+        details:[utilitySchema]
+    },
+    electricity_details: {
+        year: {
+            type: Date()
+        },
+        details:[utilitySchema]
+    },
+    gas_details: {
+        year: {
+            type: Date()
+        },
+        details:[utilitySchema]
     },
 });
 module.exports = utility;

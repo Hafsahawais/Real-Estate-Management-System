@@ -14,13 +14,13 @@ const facilities = new Schema ({
             unique: true
         }
     },
-    ground_reservation:[{
+    ground_reservation:{
         availed: Boolean,
         reservationType: {
             type: String,
             enum: ['ground', 'park','hall']
         }
-    }],
+    },
 
 
 },{timestamps: true});
