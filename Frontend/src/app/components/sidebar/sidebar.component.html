@@ -42,16 +42,16 @@
             <i class="ni ni-settings-gear-65"></i>
             <span>Settings</span>
           </a>
-          <a routerLinkActive="active" [routerLink]="['/user-profile']" class="dropdown-item">
-            <i class="ni ni-calendar-grid-58"></i>
-            <span>Activity</span>
-          </a>
-          <a routerLinkActive="active" [routerLink]="['/user-profile']" class="dropdown-item">
-            <i class="ni ni-support-16"></i>
-            <span>Support</span>
-          </a>
+<!--          <a routerLinkActive="active" [routerLink]="['/user-profile']" class="dropdown-item">-->
+<!--            <i class="ni ni-calendar-grid-58"></i>-->
+<!--            <span>Activity</span>-->
+<!--          </a>-->
+<!--          <a routerLinkActive="active" [routerLink]="['/user-profile']" class="dropdown-item">-->
+<!--            <i class="ni ni-support-16"></i>-->
+<!--            <span>Support</span>-->
+<!--          </a>-->
           <div class="dropdown-divider"></div>
-          <a href="#!" class="dropdown-item">
+          <a (click)="logout()" class="dropdown-item">
             <i class="ni ni-user-run"></i>
             <span>Logout</span>
           </a>
@@ -65,7 +65,7 @@
         <div class="row">
           <div class="col-6 collapse-brand">
             <a  routerLinkActive="active" [routerLink]="['/dashboard']">
-              <img src="../../../assets/img/brand/blue.png">
+<!--              <img src="../../../assets/img/brand/blue.png">-->
             </a>
           </div>
           <div class="col-6 collapse-close">

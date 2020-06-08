@@ -29,7 +29,6 @@ export class AddProjectComponent implements OnInit {
   submitForm() {
     console.log(this.projectDetails.value);
     this.projectDetails.controls['createdBy'].setValue(this.userService.currentUser.user._id);
-    let data = this.projectDetails.value;
     this.isSubmittingForm = true;
     // data.value.userId = this.userService.currentUser.user._id;
 
@@ -37,20 +36,20 @@ export class AddProjectComponent implements OnInit {
     this.imgsToUpload.forEach((ele, index) => {
       imageData.append("projImages", ele, ele['name']);
     })
-    for (let key in data.value) {
+    for (let key in this.projectDetails.controls) {
       // iterate and set other form data
-      imageData.append(key, data.value[key])
+      imageData.append(key, this.projectDetails.get(key).value)
     }
     console.log({ imageData });
     this.commonService.togglePageLoaderFn(true);
-    this.http.post(this.commonService.base_url + '/property/new', imageData)
+    this.http.post(this.commonService.base_url + '/project/newProject', imageData)
       .subscribe(result => {
           console.log({ result });
           let data = result && result['result'] || {};
           let message = result && result['message'] || '';
           if (data && data['slug']) {
             this.commonService.changeHeaderMessage({ type: 'success', message });
-            this.router.navigate([`/property/view/${data.slug}`])
+            this.router.navigate([`/project/singleProject/${data.slug}`])
           }
           else this.commonService.changeHeaderMessage({ type: 'danger', message: 'Something Went Wrong' });
         }, err => {
@@ -102,7 +101,7 @@ export class AddProjectComponent implements OnInit {
   projectForm(): FormGroup {
     return this._formBuilder.group({
       name: ['', Validators.required],
-      priceForm: ['', Validators.required],
+      priceFrom: ['', Validators.required],
       priceTo:['', Validators.required],
       location: ['', Validators.required],
       city: ['', Validators.required],

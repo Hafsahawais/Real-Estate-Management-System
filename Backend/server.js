@@ -2,7 +2,6 @@ const express = require('express');
 var path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const cors = require('cors');
 const morgan = require('morgan');
 
 const config = require('./config');
@@ -11,14 +10,16 @@ var app = express();
 
 app.use(express.static(path.join(__dirname, 'uploads')));
 app.use(bodyParser.json());
-app.use(cors());
 // Routing
 var users = require('./routes/userRouter');
 var booking = require('./routes/bookingRouter');
 var property = require('./routes/propertyRouter');
+var projectRouter = require('./routes/projectRouter');
 var complainRouter = require("./routes/complainRouter");
 var paymentRouter = require("./routes/paymentRouter");
 var subscriptionRouter = require("./routes/subscriptionRouter");
+var facilityRouter = require("./routes/facilityRouter");
+
 // Connect with DB
 mongoose.connect('mongodb://localhost/realEstatedb', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => // we're connected!
@@ -52,6 +53,9 @@ app.use('/property', property);
 app.use("/complains", complainRouter);
 app.use('/pay', paymentRouter);
 app.use('/sub', subscriptionRouter);
+app.use("/facility", facilityRouter);
+app.use("/project", projectRouter);
+
 
 //console.log(process.env.PORT); //.PORT, ' -port');
 // var tokenn = require('./config/config').secretKey;

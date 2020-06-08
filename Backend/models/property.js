@@ -4,7 +4,6 @@ var Schema = mongoose.Schema;
 const Property = mongoose.model('property', new mongoose.Schema({
   title: {
     type: String,
-    trim: true,
     required: true
   },
   propertyFor: {
@@ -17,25 +16,20 @@ const Property = mongoose.model('property', new mongoose.Schema({
     type: String
   },
   type: {
-    type: Schema.Types.ObjectId,
-    ref: 'property_type'
+    type: String
   },
   city: {
     type: String
   },
-
   length: {
     type: Number,
     required: true
   },
   breadth: {
-    type: Number,locality: {
-      type: String,
-      required: true
-    },
+    type: Number,
     required: true
   },
-  cornrPlot: {
+  cornerPlot: {
     type: Boolean,
     default: false,
     enum: [true, false]
@@ -61,8 +55,15 @@ const Property = mongoose.model('property', new mongoose.Schema({
     required: true
   },
   status: {
+    type: String,
+    enum: ['Available', 'Sold', 'Booked', 'Owned', 'Rented'],
+    default: 'Available',
+    required: true
+  },
+  bookingId: {
     type: Schema.Types.ObjectId,
     ref: 'booking',
+    required: function () { return (this.status === 'Booked')}
   },
   isActive: {
     type: Boolean,

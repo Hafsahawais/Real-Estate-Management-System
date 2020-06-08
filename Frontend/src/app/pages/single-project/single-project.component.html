@@ -1,0 +1,97 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+      <!-- Filters -->
+      <div class="row">
+        <div class="col-lg-12 col-lg-offset-2 col-md-12 col-md-offset-1 col-sm-12">
+          <h1>{{project.name}}</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="container">
+          <div class="carousel">
+            <input *ngFor="let x of project?.images; let i = index" type="radio" id="carousel-{{i}}" name="carousel[]" [checked]="i===0">
+            <ul class="carousel__items">
+              <li *ngFor="let y of project?.images" class="carousel__item"><img src="{{commonService.base_url}}/project/showGFSImage/{{ y }}" alt=""></li>
+            </ul>
+            <div class="carousel__prev">
+              <label *ngFor="let z of project?.images; let i = index" for="carousel-{{i}}"></label>
+            </div>
+            <div class="carousel__next">
+              <label *ngFor="let k of project?.images; let i = index" for="carousel-{{i}}"></label>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 col-lg-offset-2 col-md-12 col-md-offset-1 col-sm-12">
+          <div class="cellContainer">
+            <h4 id="price">Price Range(PKR): {{project?.priceFrom}} - {{project?.priceTo}}</h4>
+          </div>
+          <div class="cellContainer1">
+            <a class="btn btn-default" id="celldivupper">Share</a>
+          </div>
+          <div class="cellContainer1">
+            <a class="btn btn-default" id="celldivupper">Save</a>
+          </div>
+          <div class="cellContainer1">
+            <a class="btn btn-default" id="celldivupper">Buy</a>
+          </div>
+        </div>
+        <div class="col-lg-12 col-lg-offset-2 col-md-12 col-md-offset-1 col-sm-12">
+          <div class="cellContainer2">
+            <div class="bg-gradient-danger" id="celldivfirst">
+              <i class="fa fa-info fa-2x" id="iconpos" aria-hidden="true"></i>
+              <h3>Builders Name: {{project?.builder}}</h3>
+            </div>
+          </div>
+          <div class="cellContainer2">
+            <div class="bg-gradient-danger" id="celldiv">
+              <i class="fa fa-map-marker-alt fa-2x" id="iconpos" aria-hidden="true"></i>
+              <h3>{{project?.city}}, Pakistan</h3>
+            </div>
+          </div>
+          <div class="cellContainer2">
+            <div class="bg-gradient-danger" id="celldiv">
+              <i class="fa fa-bell fa-2x" id="iconpos" aria-hidden="true"></i>
+              <h3>Property Types: {{project?.propertyTypes}}</h3>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 col-lg-offset-2 col-md-12 col-md-offset-1 col-sm-12">
+          <div id="overview">
+            <div style="margin-top: 20px;">
+              <div class="bg-danger" id="overview">
+                <h2 style="color: white; margin-top: 15px;">OVERVIEW</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 col-lg-offset-2 col-md-12 col-md-offset-1 col-sm-12">
+          <h2 style="margin-top: 50px;">Description</h2>
+          <span>{{project?.description}}.</span>
+        </div>
+        <div class="col-lg-12 col-lg-offset-2 col-md-12 col-md-offset-1 col-sm-12">
+          <h2 style="margin-top: 30px;">Location</h2>
+          <span>{{project?.location}}, {{project?.city}}.</span>
+        </div>
+        <div class="col-lg-12 col-lg-offset-2 col-md-12 col-md-offset-1 col-sm-12">
+          <h2 style="margin-top: 30px;">Builders Contact Details: </h2>
+          <span>Name: {{project?.builder}}</span><br/>
+          <span>Email: {{project?.email}}</span><br/>
+          <span>Phone: {{project?.phoneNo}}</span><br/>
+        </div>
+        <div class="col-lg-12 col-lg-offset-2 col-md-12 col-md-offset-1 col-sm-12">
+          <h2 style="margin-top: 30px;">Properties:</h2>
+        </div>
+        <app-property-list style="margin-top: 7%;margin-bottom: 20px" [projectId]="project?._id"></app-property-list>
+      </div>
+    </div>
+  </div>
+</div>

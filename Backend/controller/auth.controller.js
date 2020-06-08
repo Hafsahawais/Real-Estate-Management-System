@@ -18,7 +18,7 @@ conn.on('connected', () => {
 
   async function userLogin (req, res) {
     if (req.body.email !== "" && req.body.password !== "") {
-      let User = await user
+      await user
           .findOne({$or: [
               {email: req.body.email},
               {phoneNo: req.body.email}
@@ -43,7 +43,7 @@ conn.on('connected', () => {
                   var token = jwt.sign({user: jwtData}, secretKey);
                   res
                       .status(200)
-                      .json({message: "Login Successful", token: token, user: User});
+                      .json({message: "Login Successful", token: token, user: data});
                 } else res.status(401).json({message: "Invalid Credentials1"});
               });
             } else res.status(401).json({message: "Invalid Credentials2"});
@@ -98,7 +98,7 @@ conn.on('connected', () => {
         res.status(400).send({'message': 'Please agree with the privacy policy'})
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       res.status(400).send({'message': 'Unprocess entity'});
     }
 
@@ -161,10 +161,34 @@ conn.on('connected', () => {
     })
   }
 
+  async function getUserDetails (req, res) {
+    user.findOne({ _id: req.params.userId })
+        .exec((err, result) => {
+          if(err)
+            res.status(400).send(err);
+          else{
+            res.status(200).send(result);
+          }
+        });
+  }
+
+  async function updateProfile (req, res) {
+    user.findOneAndUpdate({ _id: req.params.userId }, {...req.body}, {new: true, upsert: true})
+        .exec((err, result) => {
+          if(err)
+            res.status(400).send(err);
+          else{
+            res.status(200).send(result);
+          }
+        });
+  }
+
 module.exports = {
   userLogin,
   userRegistration,
   userList,
   changePass,
-  showGFSImage
+  showGFSImage,
+  getUserDetails,
+  updateProfile
 };

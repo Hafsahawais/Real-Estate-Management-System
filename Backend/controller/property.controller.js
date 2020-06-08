@@ -46,8 +46,8 @@ module.exports = {
       //Creating slug for the listing
       var slug  = await helpers.slugGenerator(req.body.title, 'title', 'property');
       req.body.slug = slug;
-      req.body.type = req.body.proptype;
-      req.body.cornrPlot = req.body.cornrPlot ? true : false;
+      req.body.type = req.body.Proptype;
+      req.body.cornerPlot = req.body.cornerPlot ? true : false;
       req.body.images = imgs;
       req.body.imgPath = 'properties';
 
@@ -76,15 +76,9 @@ module.exports = {
   },
   getSingleProperty: async (req, res) => {
     try{
-      var result  = await Property.findOne({ slug: req.params.propertySlug })
-        .populate('city', 'name')
-        .populate('type', 'title');
-
-      var files = [];
-      if(result && result.images.length){
-        files = await gfs.files.find({ filename: { $in : result.images } }).toArray();
-      }
-      if(result) res.status(200).json({result, files});
+      var result  = await Property.findOne({ _id: req.params.propertyId })
+          .populate('userId')
+      if(result) res.status(200).json({result});
       else throw new Error('Something Went Wrong');
     }
     catch(err){
@@ -94,8 +88,6 @@ module.exports = {
   },
   getFullList: (req, res) => {
     Property.find({ isActive: true })
-      .populate('city', 'name')
-      .populate('type', 'title')
       .populate('userId', 'name')
       .exec((err, result) => {
         if (err)
@@ -120,7 +112,7 @@ module.exports = {
     // console.log('propertyFor ', req.query.propertyFor, typeof req.query.propertyFor);
     // console.log(req.query.propertyFor.split(","));
     var query = {};
-    // query['isActive'] = true;
+    query['isActive'] = true;
 
     if (req.query.propertyFor)
       query['propertyFor'] = { $in: req.query.propertyFor.split(",") };

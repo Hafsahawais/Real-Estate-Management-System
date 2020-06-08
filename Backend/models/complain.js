@@ -23,10 +23,6 @@ const Complain = mongoose.model('complain',new mongoose.Schema({
     //     type: Schema.Types.ObjectId,
     //     ref: 'property',
     // },
-    Date: {
-        type : Date,
-        default : Date.now()
-    }
-}) );
+},{timestamps: true}) );
 
 module.exports = Complain;

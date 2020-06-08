@@ -22,7 +22,11 @@ export class UserService {
   }
 
   getcurrentUserDetails(userId){
-    return this.http.get(this.commonService.base_url + '/user/' + userId);
+    return this.http.get<any>(this.commonService.base_url + '/auth/getProfile/' + userId);
+  }
+
+  updateUserDetails(userId, body){
+    return this.http.post<any>(this.commonService.base_url + '/auth/updateProfile/' + userId, body);
   }
 
   signUp(body) {

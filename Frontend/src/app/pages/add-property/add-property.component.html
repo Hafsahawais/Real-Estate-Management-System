@@ -96,7 +96,7 @@
                 <p *ngIf="currentStatus === STATUS_INITIAL">
                   Drag your file(s) here to begin<br>
                   or click to browse<br>
-                  <small>max size: 80kb (or else will be ignored)</small>
+                  <small>max size: 800kb (or else will be ignored)</small>
                 </p>
                 <!-- <p *ngIf="currentStatus === STATUS_SAVING">
                   Uploading {{ photos.files.length }} files...
@@ -129,16 +129,17 @@
                 </div>
                 <div class="col-4">
                   <label for="">Property Type:</label>
-<!--                  <select required name="Proptype" ngModel #Proptype="ngModel" class="custom-select">-->
-<!--                    <option value="">Select Property Type</option>-->
-<!--                    <option *ngFor="let property of propertyTypeList" value="{{property._id}}">{{property.title}}</option>-->
-<!--                  </select>-->
-                  <input type="text" name="Proptype" ngModel #Proptype="ngModel" class="form-control"
-                         style="-webkit-appearance: none;">
+                  <select required name="Proptype" ngModel #Proptype="ngModel" class="custom-select">
+                    <option value="">Select Property Type</option>
+                    <option value="Flat">Flat</option>
+                    <option value="Apartment">Apartment</option>
+                    <option value="House">House</option>
+                    <option value="Bungalow">Bungalow</option>
+                  </select>
                   <small class="text-danger" *ngIf="Proptype.touched && Proptype.invalid">This field is required</small>
                 </div>
                 <div class="col-4">
-                  <label for="">Enter Total Amount <small class="text-primary">(optional)</small> </label>
+                  <label for="">Enter Total Amount in PKR <small class="text-primary">(optional)</small> </label>
                   <input type="number" name="price" ngModel #price="ngModel" class="form-control"
                          style="-webkit-appearance: none;">
                 </div>
@@ -154,19 +155,19 @@
                 <p>Plot Dimensions - </p>
                 <div class="row">
                   <div class="col-md-3">
-                    <small>Length</small>
+                    <small>Length (ft.)</small>
                     <input type="number" min="0" ngModel #length="ngModel" name="length" required placeholder="Plot length"
                            class="form-control form-field-small">
                     <small class="text-danger" *ngIf="length.touched && length.invalid">required*</small>
                   </div>
                   <div class="col-md-3">
-                    <small>Breadth</small>
+                    <small>Breadth (ft.)</small>
                     <input type="number" min="0" ngModel #breadth="ngModel" name="breadth" required placeholder="Plot breadth"
                            class="form-control form-field-small">
                     <small class="text-danger" *ngIf="breadth.touched && breadth.invalid">required*</small>
                   </div>
                   <div class="col-md-6">
-                    <p>Total-</p>
+                    <p>Total Area-</p>
                     <h5 *ngIf="breadth.value && length.value">
                       {{ (breadth.value | number) * (length.value | number) }} sqft</h5>
                   </div>
@@ -175,9 +176,9 @@
               <div class="col-md-2">
                 <p>Corner Plot?</p>
                 <div class="custom-control custom-checkbox">
-                  <input class="custom-control-input" ngModel #cornrPlot="ngModel" name="cornrPlot" value="true"
-                         id="cornrPlotId" type="checkbox">
-                  <label class="custom-control-label" for="cornrPlotId">Yes</label>
+                  <input class="custom-control-input" ngModel #cornerPlot="ngModel" name="cornerPlot" value="true"
+                         id="cornerPlotId" type="checkbox">
+                  <label class="custom-control-label" for="cornerPlotId">Yes</label>
                 </div>
               </div>
               <div>
@@ -187,8 +188,15 @@
 
             <h4>Location -</h4>
             <hr class="hr">
-
             <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="">Property Complete Address:</label>
+                <input type="text" required [appInputFormat]="'capitalize'" name="address" ngModel #address="ngModel"
+                       placeholder="Enter complete Property's Address" class="form-control">
+
+                <small class="text-danger" *ngIf="address.touched && address.invalid">
+                  This field is required</small>
+              </div>
               <div class="form-group col-md-3">
                 <label for="">City: <small><i class="fa fa-refresh fa-spin fa-fw"></i></small></label>
                 <input name="city" ngModel #city="ngModel" required placeholder="Enter City" class="form-control">
@@ -196,40 +204,40 @@
                 <small class="text-danger" *ngIf="city.touched && city.invalid">
                   This field is required</small>
               </div>
-              <div class="form-group col-md-3">
-                <label for="">Pincode:</label>
-                <input type="text" placeholder="Enter Pincode" ngModel #pincode="ngModel" required name="pincode"
-                       class="form-control">
-                <small class="text-danger" *ngIf="pincode.touched && pincode.invalid">
-                  This field is required</small>
-              </div>
-              <div class="form-group col-md-3">
-                <label for="">Locality:</label>
-                <input type="text" name="locality" [appInputFormat]="'capitalize'" ngModel #locality="ngModel" required
-                       placeholder="Enter locality" class="form-control">
-                <small class="text-danger" *ngIf="locality.touched && locality.invalid">
-                  This field is required</small>
-              </div>
-              <div class="form-group col-md-4">
-                <label>Is it a Society?</label> <br>
-                <label> <input type="radio" ngModel #isSociety="ngModel" required name="isSociety" value="true"> Yes </label>
-                &nbsp;
-                <label> <input type="radio" ngModel #isSociety="ngModel" required name="isSociety" value="false"> No </label>
-              </div>
-              <div [hidden]="isSociety.value != 'true'" class="form-group col-md-4">
-                <label for="">Society Name:</label>
-                <input type="text" name="societyName" [appInputFormat]="'capitalize'" ngModel #societyName="ngModel"
-                       [required]="isSociety.value == 'true'" placeholder="Enter Society Name" class="form-control">
-                <small class="text-danger" *ngIf="societyName.touched && societyName.invalid">
-                  This field is required</small>
-              </div>
-              <div [hidden]="isSociety.value != 'true'" class="form-group col-md-4">
-                <label for="">Flat No.:</label>
-                <input type="text" name="flatNo" ngModel #flatNo="ngModel" [required]="isSociety.value == 'true'"
-                       placeholder="Enter Flat Number" class="form-control">
-                <small class="text-danger" *ngIf="flatNo.touched && flatNo.invalid">
-                  This field is required</small>
-              </div>
+<!--              <div class="form-group col-md-3">-->
+<!--                <label for="">Pincode:</label>-->
+<!--                <input type="text" placeholder="Enter Pincode" ngModel #pincode="ngModel" required name="pincode"-->
+<!--                       class="form-control">-->
+<!--                <small class="text-danger" *ngIf="pincode.touched && pincode.invalid">-->
+<!--                  This field is required</small>-->
+<!--              </div>-->
+<!--              <div class="form-group col-md-3">-->
+<!--                <label for="">Locality:</label>-->
+<!--                <input type="text" name="locality" [appInputFormat]="'capitalize'" ngModel #locality="ngModel" required-->
+<!--                       placeholder="Enter locality" class="form-control">-->
+<!--                <small class="text-danger" *ngIf="locality.touched && locality.invalid">-->
+<!--                  This field is required</small>-->
+<!--              </div>-->
+<!--              <div class="form-group col-md-4">-->
+<!--                <label>Is it a Society?</label> <br>-->
+<!--                <label> <input type="radio" ngModel #isSociety="ngModel" required name="isSociety" value="true"> Yes </label>-->
+<!--                &nbsp;-->
+<!--                <label> <input type="radio" ngModel #isSociety="ngModel" required name="isSociety" value="false"> No </label>-->
+<!--              </div>-->
+<!--              <div [hidden]="isSociety.value != 'true'" class="form-group col-md-4">-->
+<!--                <label for="">Society Name:</label>-->
+<!--                <input type="text" name="societyName" [appInputFormat]="'capitalize'" ngModel #societyName="ngModel"-->
+<!--                       [required]="isSociety.value == 'true'" placeholder="Enter Society Name" class="form-control">-->
+<!--                <small class="text-danger" *ngIf="societyName.touched && societyName.invalid">-->
+<!--                  This field is required</small>-->
+<!--              </div>-->
+<!--              <div [hidden]="isSociety.value != 'true'" class="form-group col-md-4">-->
+<!--                <label for="">Flat No.:</label>-->
+<!--                <input type="text" name="flatNo" ngModel #flatNo="ngModel" [required]="isSociety.value == 'true'"-->
+<!--                       placeholder="Enter Flat Number" class="form-control">-->
+<!--                <small class="text-danger" *ngIf="flatNo.touched && flatNo.invalid">-->
+<!--                  This field is required</small>-->
+<!--              </div>-->
             </div>
 
             <h4>Other Information -</h4>
@@ -245,14 +253,6 @@
                           class="form-control" resize="none" cols="30" maxlength="500" rows="5"></textarea>
 
                 <small class="text-danger" *ngIf="description.touched && description.invalid">
-                  This field is required</small>
-              </div>
-              <div class="form-group col-md-12">
-                <label for="">Property Complete Address:</label>
-                <input type="text" required [appInputFormat]="'capitalize'" name="address" ngModel #address="ngModel"
-                       placeholder="Enter complete Property's Address" class="form-control">
-
-                <small class="text-danger" *ngIf="address.touched && address.invalid">
                   This field is required</small>
               </div>
 
@@ -277,7 +277,7 @@
                                       [toolTipData]="{ position: 'right', text: 'On the basics of values entered above' }"></app-small-components>
               </label>
               <input type="text" #title="ngModel" name="title" (change)="log(title.value)"
-                     [ngModel]="(cornrPlot.value ? 'Corner ' : '') + getDataTitleViaId(Proptype.value, 'propertyTypeList', 'title') + (societyName?.value ? ' at ' +  societyName.value : '') + (city.value ? ' in ' + city.value : '')"
+                     [ngModel]="(cornerPlot.value ? 'Corner ' : '') + (Proptype?.value) + (city.value ? ' in ' + city.value : '')"
                      placeholder="Enter property's title" required class="form-control">
 
               <small class="text-danger" *ngIf="title.touched && title.invalid">

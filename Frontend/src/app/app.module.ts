@@ -12,6 +12,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
+import {HomeComponent} from "./pages/home/home.component";
+import {SinglePropertyComponentNewUser} from "./pages/single-property-new-user/single-property-component-new-user.component";
+import {SingleProjectComponentNewUser} from "./pages/single-project-new-user/single-project-component-new-user.component";
 
 
 @NgModule({
@@ -27,7 +30,10 @@ import { ComponentsModule } from './components/components.module';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    AuthLayoutComponent
+    AuthLayoutComponent,
+    HomeComponent,
+    SinglePropertyComponentNewUser,
+    SingleProjectComponentNewUser
   ],
   providers: [],
   bootstrap: [AppComponent]

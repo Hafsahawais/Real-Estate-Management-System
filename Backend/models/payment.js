@@ -14,7 +14,7 @@ const payment = new Schema ({
   reference_no: {
     type: String,
   }
-});
+},{timestamps: true});
 
 var  Payment = mongoose.model('payment', payment);
 module.exports = Payment;

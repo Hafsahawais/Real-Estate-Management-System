@@ -22,7 +22,7 @@
             </div>
           </div>
           <div class="cellContainer">
-            <div style="margin-left: 10px; margin-top: 5px;">                                     
+            <div style="margin-left: 10px; margin-top: 5px;">
               <select id="basic" class="selectpicker show-tick form-control" title="Select your city">
                 <option disabled selected hidden>City</option>
                 <option>Karachi</option>
@@ -38,7 +38,7 @@
             </div>
           </div>
           <div class="cellContainer">
-            <div style="margin-left: 10px; margin-top: 5px;">                                     
+            <div style="margin-left: 10px; margin-top: 5px;">
               <select id="basic" class="selectpicker show-tick form-control" title="Price">
                 <option disabled selected hidden>Price (PKR)</option>
                 <option>0-500,000</option>
@@ -57,7 +57,7 @@
             </div>
           </div>
           <div class="cellContainer">
-            <div style="margin-left: 10px; margin-top: 5px;">                                     
+            <div style="margin-left: 10px; margin-top: 5px;">
               <select id="basic" class="selectpicker show-tick form-control" title="Area">
                 <option disabled selected hidden>Area (Marla)</option>
                 <option>0-2</option>
@@ -69,7 +69,7 @@
             </div>
           </div>
           <div class="cellContainer">
-            <div style="margin-left: 10px; margin-top: 5px;">                                     
+            <div style="margin-left: 10px; margin-top: 5px;">
               <input type="text" class="form-control" placeholder="Developer Title">
             </div>
           </div>
@@ -91,6 +91,16 @@
           </div>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-lg-12 col-lg-offset-2 col-md-12 col-md-offset-1 col-sm-12">
+          <div id="add_project_button">
+            <div style="margin-top: 20px;">
+              <a routerLink="/add-project" class="btn btn-default" id="add_project_button">ADD PROJECT</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -100,31 +110,33 @@
   <div class="row">
     <div class="card shadow">
       <div class="col-lg-12 col-lg-offset-2 col-md-12 col-md-offset-1 col-sm-12">
-        <div class="projectContainer" *ngFor="let project of projects">
+        <div class="projectContainer" *ngFor="let project of projectList">
           <mat-card>
-            <img mat-card-image [src]="project.imgSrc">
+            <a routerLink="/single-project/{{project._id}}">
+              <img mat-card-image src="{{commonService.base_url}}/project/showGFSImage/{{ project.images[0] }}">
+            </a>
             <mat-card-header style="justify-content: center">
               <mat-card-title class="d-flex justify-content-center">
                 <h2 class="m-0">{{project.name}}</h2>
               </mat-card-title>
-              <mat-card-subtitle class="d-flex justify-content-center">
-                <h4 class="m-0">{{project.status}}</h4>
-              </mat-card-subtitle>
+<!--              <mat-card-subtitle class="d-flex justify-content-center">-->
+<!--                <h4 class="m-0">Price{{project.priceFrom}} - {{project.priceTo}}</h4>-->
+<!--              </mat-card-subtitle>-->
             </mat-card-header>
             <mat-card-content class="d-flex justify-content-center">
               <p>
                 {{project.description}}
               </p>
             </mat-card-content>
-  
+
             <mat-card-actions class="d-flex justify-content-center">
-              <button mat-button>{{project.price}}</button>
+              <button mat-button>Price Range(PKR): {{project.priceFrom}} - {{project.priceTo}}</button>
               <button mat-button>
-                <mat-icon class="nav-icon">location_on</mat-icon> {{project.location}}
+                <mat-icon class="nav-icon">location_on</mat-icon> {{project.location}}, {{project.city}}
               </button>
               <div ngbDropdown placement="bottom-right">
                 <a class="btn btn-sm btn-icon-only text-dark" ngbDropdownToggle>
-                  <i class="fas fa-ellipsis-v"></i>
+                  <i class="fas text-black-50 fa-ellipsis-v"></i>
                 </a>
                 <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
                   <a class="dropdown-item" href="javascript:void(0)">Buy</a>
@@ -141,31 +153,31 @@
   <div class="row">
     <div class="card shadow">
       <div class="col-12">
-        <div class="card-footer py-4">
-          <nav aria-label="...">
-            <ul class="pagination justify-content-end mb-0">
-              <li class="page-item disabled">
-                <a class="page-link" href="javascript:void(0)" tabindex="-1">
-                  <i class="fas fa-angle-left"></i>
-                  <span class="sr-only">Previous</span>
-                </a>
-              </li>
-              <li class="page-item active">
-                <a class="page-link" href="javascript:void(0)">1</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0)">2 <span class="sr-only">(current)</span></a>
-              </li>
-              <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0)">
-                  <i class="fas fa-angle-right"></i>
-                  <span class="sr-only">Next</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
+<!--        <div class="card-footer py-4">-->
+<!--          <nav aria-label="...">-->
+<!--            <ul class="pagination justify-content-end mb-0">-->
+<!--              <li class="page-item disabled">-->
+<!--                <a class="page-link" href="javascript:void(0)" tabindex="-1">-->
+<!--                  <i class="fas fa-angle-left"></i>-->
+<!--                  <span class="sr-only">Previous</span>-->
+<!--                </a>-->
+<!--              </li>-->
+<!--              <li class="page-item active">-->
+<!--                <a class="page-link" href="javascript:void(0)">1</a>-->
+<!--              </li>-->
+<!--              <li class="page-item">-->
+<!--                <a class="page-link" href="javascript:void(0)">2 <span class="sr-only">(current)</span></a>-->
+<!--              </li>-->
+<!--              <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>-->
+<!--              <li class="page-item">-->
+<!--                <a class="page-link" href="javascript:void(0)">-->
+<!--                  <i class="fas fa-angle-right"></i>-->
+<!--                  <span class="sr-only">Next</span>-->
+<!--                </a>-->
+<!--              </li>-->
+<!--            </ul>-->
+<!--          </nav>-->
+<!--        </div>-->
       </div>
     </div>
   </div>

@@ -5,12 +5,17 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
+import {HomeComponent} from "./pages/home/home.component";
+import {SinglePropertyComponentNewUser} from "./pages/single-property-new-user/single-property-component-new-user.component";
 
 const routes: Routes =[
   {
     path: '',
-    redirectTo: 'dashboard',
     pathMatch: 'full',
+    component: HomeComponent
+  },{
+    path: 'property/:id',
+    component: SinglePropertyComponentNewUser
   }, {
     path: '',
     component: AdminLayoutComponent,
@@ -31,7 +36,7 @@ const routes: Routes =[
     ]
   }, {
     path: '**',
-    redirectTo: 'dashboard'
+    redirectTo: ''
   }
 ];
 

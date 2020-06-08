@@ -7,7 +7,7 @@ module.exports = {
   getAllBookings: (req, res) => {
     // console.log('GET Bookings');
 
-    Booking.find({ is_active: true })
+    Booking.find({ isActive: true })
       .exec((err, data) => {
         if(err)
           res.status(400).send(err);
