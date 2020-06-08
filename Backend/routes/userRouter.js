@@ -43,6 +43,8 @@ router.put('/admin/changePass', authC.changePass);
 
 router.get('/showGFSImage/:filename', authC.showGFSImage); // To view image in front-end
 
+router.get('/getProfile/:userId', authC.getUserDetails);
+router.post('/updateProfile/:userId', authC.updateProfile);
 
 // console.log(app);
 

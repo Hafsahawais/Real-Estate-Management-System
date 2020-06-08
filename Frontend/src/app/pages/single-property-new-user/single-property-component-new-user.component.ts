@@ -6,17 +6,15 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {LoginService} from "../../services/login.service";
 
 @Component({
-  selector: 'app-single-project',
-  templateUrl: './single-project.component.html',
-  styleUrls: ['./single-project.component.scss']
+  selector: 'app-single-property-new-user',
+  templateUrl: './single-property-component-new-user.component.html',
+  styleUrls: ['./single-property-component-new-user.component.scss']
 })
-export class SingleProjectComponent implements OnInit {
+export class SinglePropertyComponentNewUser implements OnInit {
 
   public copy: string;
-  project = [];
-  private projectId: string;
-
-
+  property = [];
+  private propertyId: string;
   constructor(
     private commonService: CommonService,
     private loginService: LoginService,
@@ -28,14 +26,14 @@ export class SingleProjectComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.projectId = this.activatedRoute.snapshot.paramMap.get('id')
-    if(this.projectId) this.getProjectDetails()
+    this.propertyId = this.activatedRoute.snapshot.paramMap.get('id')
+    if(this.propertyId) this.getPropertyDetails()
   }
 
-  getProjectDetails() {
-    this.commonService.getSingleProject(this.projectId).subscribe(data => {
+  getPropertyDetails() {
+    this.commonService.getSingleProperty(this.propertyId).subscribe(data => {
       console.log(data)
-      this.project = data.result;
+      this.property = data.result;
     })
 
   }

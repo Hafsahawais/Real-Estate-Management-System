@@ -40,9 +40,9 @@ router.post('/type', propertyController.addPropertyType);
 router.post('/new', upload.array("propImages"), propertyController.addNewProperty);
 router.get('/list/:userId', propertyController.getUserList);
 router.get('/list/', propertyController.getFullList);
-router.get('/single/:propertySlug', propertyController.getSingleProperty);
+router.get('/single/:propertyId', propertyController.getSingleProperty);
 router.get('/showGFSImage/:filename', propertyController.showGFSImage); // To view image in front-end
-router.post('/markAsSold/:propertySlug', propertyController.markAsSold);
+router.post('/markAsSold/:propertyId', propertyController.markAsSold);
 
 //Properties filter
 router.get('/filter', propertyController.filterProperties);

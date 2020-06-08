@@ -161,10 +161,34 @@ conn.on('connected', () => {
     })
   }
 
+  async function getUserDetails (req, res) {
+    user.findOne({ _id: req.params.userId })
+        .exec((err, result) => {
+          if(err)
+            res.status(400).send(err);
+          else{
+            res.status(200).send(result);
+          }
+        });
+  }
+
+  async function updateProfile (req, res) {
+    user.findOneAndUpdate({ _id: req.params.userId }, {...req.body}, {new: true, upsert: true})
+        .exec((err, result) => {
+          if(err)
+            res.status(400).send(err);
+          else{
+            res.status(200).send(result);
+          }
+        });
+  }
+
 module.exports = {
   userLogin,
   userRegistration,
   userList,
   changePass,
-  showGFSImage
+  showGFSImage,
+  getUserDetails,
+  updateProfile
 };

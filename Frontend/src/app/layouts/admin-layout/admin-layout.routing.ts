@@ -9,15 +9,36 @@ import {AddPropertyComponent} from "../../pages/add-property/add-property.compon
 import {AddProjectComponent} from "../../pages/add-project/add-project.component";
 import {SinglePropertyComponent} from "../../pages/single-property/single-property.component";
 import {SingleProjectComponent} from "../../pages/single-project/single-project.component";
+import {AuthGuardService} from "../../services/auth-guard.service";
 
 export const AdminLayoutRoutes: Routes = [
-    { path: 'dashboard',      component: DashboardComponent },
-    { path: 'user-profile',   component: UserProfileComponent },
-    { path: 'complaints',     component: ComplaintsComponent },
+    {
+      path: 'dashboard',
+      component: DashboardComponent,
+      canActivate: [AuthGuardService]
+    },
+    {
+      path: 'user-profile',
+      component: UserProfileComponent,
+      canActivate: [AuthGuardService]
+    },
+    {
+      path: 'complaints',
+      component: ComplaintsComponent,
+      canActivate: [AuthGuardService]
+    },
     { path: 'projects',       component: ProjectListComponent },
     { path: 'properties',     component: PropertyListComponent },
-    { path: 'add-property',   component: AddPropertyComponent },
-    { path: 'add-project',    component: AddProjectComponent },
-    { path: 'single-property',    component: SinglePropertyComponent },
-    { path: 'single-project',    component: SingleProjectComponent },
+    {
+      path: 'add-property',
+      component: AddPropertyComponent,
+      canActivate: [AuthGuardService]
+    },
+    {
+      path: 'add-project',
+      component: AddProjectComponent,
+      canActivate: [AuthGuardService]
+    },
+    { path: 'single-property/:id',    component: SinglePropertyComponent },
+    { path: 'single-project/:id',    component: SingleProjectComponent },
 ];

@@ -14,6 +14,7 @@ app.use(bodyParser.json());
 var users = require('./routes/userRouter');
 var booking = require('./routes/bookingRouter');
 var property = require('./routes/propertyRouter');
+var projectRouter = require('./routes/projectRouter');
 var complainRouter = require("./routes/complainRouter");
 var chargeRouter = require("./routes/chargeRouter");
 var paymentRouter = require("./routes/paymentRouter");
@@ -53,6 +54,7 @@ app.use("/complains", complainRouter);
 app.use("/payment", paymentRouter);
 app.use("/charge", chargeRouter);
 app.use("/facility", facilityRouter);
+app.use("/project", projectRouter);
 
 
 //console.log(process.env.PORT); //.PORT, ' -port');

@@ -21,7 +21,6 @@ const Property = mongoose.model('property', new mongoose.Schema({
   city: {
     type: String
   },
-
   length: {
     type: Number,
     required: true
@@ -56,8 +55,15 @@ const Property = mongoose.model('property', new mongoose.Schema({
     required: true
   },
   status: {
+    type: String,
+    enum: ['Available', 'Sold', 'Booked', 'Owned', 'Rented'],
+    default: 'Available',
+    required: true
+  },
+  bookingId: {
     type: Schema.Types.ObjectId,
     ref: 'booking',
+    required: function () { return (this.status === 'Booked')}
   },
   isActive: {
     type: Boolean,

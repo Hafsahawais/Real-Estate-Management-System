@@ -29,28 +29,29 @@ const user = new Schema ({
     type: String,
     required: true
   },
+  address: {
+    type: String
+  },
   city: {
     type: String
   },
-  updatedOn: {
-    type: Date,
-    default: Date.now()
+  country: {
+    type: String
   },
-  createdOn: {
-    type: Date
+  about: {
+    type: String
   },
-  // images: {
-  //   type: [String]
-  // },
-  // imgPath: {
-  //   type: String
-  // },
+  images: {
+    type: [String]
+  },
+  imgPath: {
+    type: String
+  },
   admin: {
     type: Boolean,
     default: false
   }
-
-});
+},{timestamps: true});
 user.plugin(passportLocalMongoose);
 
 var User = mongoose.model('user', user);

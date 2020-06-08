@@ -18,6 +18,12 @@ h2 {
 }
 
 .property-image{
-    width: 150px;
-    height: auto;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.property-row:hover{
+  background-color: #dddddd;
 }

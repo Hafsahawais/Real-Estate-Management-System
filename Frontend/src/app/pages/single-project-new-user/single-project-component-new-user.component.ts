@@ -6,11 +6,11 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {LoginService} from "../../services/login.service";
 
 @Component({
-  selector: 'app-single-project',
-  templateUrl: './single-project.component.html',
-  styleUrls: ['./single-project.component.scss']
+  selector: 'app-single-project-new-user',
+  templateUrl: './single-project-component-new-user.component.html',
+  styleUrls: ['./single-project-component-new-user.component.scss']
 })
-export class SingleProjectComponent implements OnInit {
+export class SingleProjectComponentNewUser implements OnInit {
 
   public copy: string;
   project = [];

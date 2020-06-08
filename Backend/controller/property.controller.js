@@ -76,15 +76,9 @@ module.exports = {
   },
   getSingleProperty: async (req, res) => {
     try{
-      var result  = await Property.findOne({ slug: req.params.propertySlug })
-        .populate('city', 'name')
-        .populate('type', 'title');
-
-      var files = [];
-      if(result && result.images.length){
-        files = await gfs.files.find({ filename: { $in : result.images } }).toArray();
-      }
-      if(result) res.status(200).json({result, files});
+      var result  = await Property.findOne({ _id: req.params.propertyId })
+          .populate('userId')
+      if(result) res.status(200).json({result});
       else throw new Error('Something Went Wrong');
     }
     catch(err){

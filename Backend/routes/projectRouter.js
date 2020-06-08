@@ -32,13 +32,13 @@ const upload = multer({ storage });
 // ====================================================================================
 // ====================================ROUTES=========================================
 // ====================================================================================
-router.get('/projectlist', projectController.projectList);
+router.get('/projectList/', projectController.projectList);
 
 //Property
-router.post('/newproject', upload.array("propImages"), projectController.addNewProject);
+router.post('/newProject', upload.array("projImages"), projectController.addNewProject);
 
-router.put('/updateproject', projectController.updateProject);
-router.put('/singleproject', projectController.getSingleProject);
+router.put('/updateProject', projectController.updateProject);
+router.get('/single/:projectId', projectController.getSingleProject);
 router.get('/showGFSImage/:filename', projectController.showGFSImage); // To view image in front-end
 
 //Properties filter

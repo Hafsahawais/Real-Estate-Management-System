@@ -4,7 +4,6 @@ var fs = require('fs');
 var http = require('http');
 var Project = require('../models/project');
 const helpers = require('../provider/helper');
-var property = require('../models/property');
 
 var gfs;
 var conn = mongoose.connection;
@@ -15,37 +14,30 @@ conn.on('connected', () => {
 
 module.exports = {
     projectList: (req, res) => {
-        Project.find({is_active: true}, (err, result) => {
-            if (err)
-                res.status(400).send(err);
-            else
-                res.status(200).json(result);
-        });
+        Project.find({ isActive: true })
+            .populate('createdBy')
+            .exec((err, result) => {
+                if (err)
+                    res.status(400).send(err);
+                else
+                    res.status(200).json(result);
+            });
     },
     addNewProject: async (req, res) => {
         let imgs = [];
+        let properties = []
         try {
-            var project = new Project();
             if (req.files && req.files.length)
                 req.files.forEach(ele => imgs.push(ele.filename));
             // Creating slug for the listing
-            var slug  = await helpers.slugGenerator(req.body.title, 'title', 'project');
+            var slug  = await helpers.slugGenerator(req.body.name, 'name', 'project');
 
             req.body.slug = slug;
-            req.body.name = req.body.projectname;
-            req.body.description = req.body.descr;
-            req.body.location = req.body.address;
-            req.body.priceFrom = req.body.pricefrom;
-            req.body.priceTo= req.body.priceto;
-            req.body.builder = req.body.builders;
-            req.body.email = req.body.emails;
-            req.body.phoneNo  = req.body.pno;
-            req.body.propertyTypes = req.body.proptype;
-            req.body.properties = property._id;
             req.body.images = imgs;
-            req.body.imgPath = 'properties';
+            req.body.imgPath = 'projects';
+            req.body.properties = properties
 
-            const p = new Project(req.body);
+            const project = new Project(req.body);
             const result = await project.save();
 
             if (result && result._id && result.slug)
@@ -95,15 +87,9 @@ module.exports = {
     },
     getSingleProject: async (req, res) => {
         try{
-            var result  = await Project.findOne({ slug: req.params.projectSlug })
-                .populate('location', 'name')
-                .populate('description');
-
-            var files = [];
-            if(result && result.images.length){
-                files = await gfs.files.find({ filename: { $in : result.images } }).toArray();
-            }
-            if(result) res.status(200).json({result, files});
+            var result  = await Project.findOne({ _id: req.params.projectId })
+                .populate('createdBy');
+            if(result) res.status(200).json({result});
             else throw new Error('Something Went Wrong');
         }
         catch(err){
@@ -123,7 +109,7 @@ module.exports = {
             // Check if image
             if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
                 // Read output to browser
-                const readstream = createReadStream(file.filename);
+                const readstream = gfs.createReadStream(file.filename);
                 readstream.pipe(res);
             } else {
                 res.status(404).json({

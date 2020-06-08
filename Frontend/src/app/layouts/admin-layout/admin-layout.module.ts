@@ -20,6 +20,9 @@ import {AddPropertyComponent} from "../../pages/add-property/add-property.compon
 import {AddProjectComponent} from "../../pages/add-project/add-project.component";
 import {SinglePropertyComponent} from "../../pages/single-property/single-property.component";
 import {SingleProjectComponent} from "../../pages/single-project/single-project.component";
+import {RegistrationValidators} from "../../validators/registration.validators";
+import {AuthGuardService} from "../../services/auth-guard.service";
+import {LoginService} from "../../services/login.service";
 
 @NgModule({
     imports: [
@@ -45,7 +48,12 @@ import {SingleProjectComponent} from "../../pages/single-project/single-project.
     AddProjectComponent,
     SinglePropertyComponent,
     SingleProjectComponent
-  ]
+  ],
+  providers: [
+    LoginService,
+    RegistrationValidators,
+    AuthGuardService
+  ],
 })
 
 export class AdminLayoutModule {}

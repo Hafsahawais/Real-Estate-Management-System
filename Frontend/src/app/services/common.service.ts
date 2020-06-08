@@ -38,19 +38,27 @@ export class CommonService {
 
 
   getPropertyTypeList(): Observable<any>{
-    return this.http.get(this.base_url + '/property/type');
+    return this.http.get<any>(this.base_url + '/property/type');
   }
 
   propertyList(param = ''){
-    return this.http.get(this.base_url + '/property/list/' + param);
+    return this.http.get<any>(this.base_url + '/property/list/' + param);
   }
 
-  getSingleProperty(propertySlug){
-    return this.http.get(this.base_url + '/property/single/' + propertySlug);
+  projectList(param = ''){
+    return this.http.get<any>(this.base_url + '/project/projectList/' + param);
+  }
+
+  getSingleProperty(propertyId){
+    return this.http.get<any>(this.base_url + '/property/single/' + propertyId);
+  }
+
+  getSingleProject(projectId){
+    return this.http.get<any>(this.base_url + '/project/single/' + projectId);
   }
 
   filterProperties(param = ''){
-    return this.http.get(this.base_url + '/property/filter' + param );
+    return this.http.get<any>(this.base_url + '/property/filter' + param );
   }
 
 }

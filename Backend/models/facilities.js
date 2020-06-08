@@ -23,6 +23,6 @@ const facilities = new Schema ({
     }],
 
 
-});
+},{timestamps: true});
 var facility = mongoose.model('facilities', facilities);
 module.exports = facility;

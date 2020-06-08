@@ -47,7 +47,7 @@ export class AddPropertyComponent implements OnInit {
       // iterate and set other form data
       imageData.append(key, data.value[key])
     }
-    console.log({ imageData });
+    console.log( imageData );
     this.commonService.togglePageLoaderFn(true);
     this.http.post(this.commonService.base_url + '/property/new', imageData)
       .subscribe(result => {
@@ -56,7 +56,7 @@ export class AddPropertyComponent implements OnInit {
           let message = result && result['message'] || '';
           if (data && data['slug']) {
             this.commonService.changeHeaderMessage({ type: 'success', message });
-            this.router.navigate([`/property/view/${data.slug}`])
+            this.router.navigate([`/property/single-property/${data._id}`])
           }
           else this.commonService.changeHeaderMessage({ type: 'danger', message: 'Something Went Wrong' });
         }, err => {
@@ -78,7 +78,7 @@ export class AddPropertyComponent implements OnInit {
       // this.imgsToUpload = Object.values(fileList);
       let i = 0;
       Object.values(fileList).forEach(f => {
-        if (fileList[i].size < 80000) {
+        if (fileList[i].size < 800000) {
           // console.log({ f });
           let reader = new FileReader();
           reader.readAsDataURL(fileList[i]);

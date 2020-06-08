@@ -15,11 +15,11 @@ const project = new Schema ({
     type: String
   },
   priceFrom: {
-    type: Number,
+    type: String,
     required: true
   },
   priceTo: {
-    type: Number,
+    type: String,
     required: true
   },
   location: {
@@ -49,6 +49,10 @@ const project = new Schema ({
   description: {
     type: String
   },
+  slug : {
+    type: String,
+    required: true
+  },
   properties: [
     {
       type: Schema.Types.ObjectId,
@@ -59,6 +63,10 @@ const project = new Schema ({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
     required: true,
+  },
+  isActive: {
+    type: Boolean,
+    default: true
   },
 },{timestamps: true});
 
