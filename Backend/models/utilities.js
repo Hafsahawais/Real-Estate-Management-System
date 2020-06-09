@@ -21,21 +21,21 @@ const utility = new Schema ({
         ref: 'property'
     },
     maintenance_details: {
-        year: {
-            type: Date()
-        },
+        // year: {
+        //     type: Date()
+        // },
         details:[utilitySchema]
     },
     electricity_details: {
-        year: {
-            type: Date()
-        },
+        // year: {
+        //     type: Date()
+        // },
         details:[utilitySchema]
     },
     gas_details: {
-        year: {
-            type: Date()
-        },
+        // year: {
+        //     type: Date()
+        // },
         details:[utilitySchema]
     },
 });
