@@ -23,6 +23,7 @@ import {SingleProjectComponent} from "../../pages/single-project/single-project.
 import {RegistrationValidators} from "../../validators/registration.validators";
 import {AuthGuardService} from "../../services/auth-guard.service";
 import {LoginService} from "../../services/login.service";
+import {StripePaymentComponent} from "../../pages/payment-page/stripe-payment.component";
 
 @NgModule({
     imports: [
@@ -36,7 +37,8 @@ import {LoginService} from "../../services/login.service";
         MatButtonModule,
         MatIconModule,
         FlexLayoutModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+
     ],
   declarations: [
     DashboardComponent,
@@ -47,7 +49,8 @@ import {LoginService} from "../../services/login.service";
     AddPropertyComponent,
     AddProjectComponent,
     SinglePropertyComponent,
-    SingleProjectComponent
+    SingleProjectComponent,
+    StripePaymentComponent
   ],
   providers: [
     LoginService,

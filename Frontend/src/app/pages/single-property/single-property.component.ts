@@ -15,6 +15,7 @@ export class SinglePropertyComponent implements OnInit {
   public copy: string;
   property = [];
   private propertyId: string;
+  private userID: any;
   constructor(
     private commonService: CommonService,
     private loginService: LoginService,
@@ -39,4 +40,22 @@ export class SinglePropertyComponent implements OnInit {
   }
 
 
+  buyProperty(price) {
+    let user;
+    this.userID = this.userService.currentUser.user._id;
+   this.userService.getcurrentUserDetails(this.userID).subscribe(data => {
+     user = data
+     this.userService.makePayment({email: user.email, amount: price }).subscribe(res => {
+       const clientSecret = res.data['client_secret'];
+       const result = await stripe.confirmCardPayment(clientSecret, {
+         payment_method: {
+           card: elements.getElement(CardElement),
+           billing_details: {
+             email: email,
+           },
+         },
+       });
+     })
+   })
+  }
 }

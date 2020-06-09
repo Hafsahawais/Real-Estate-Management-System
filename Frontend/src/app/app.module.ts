@@ -44,7 +44,7 @@ import {FlexLayoutModule} from "@angular/flex-layout";
     MatButtonModule,
     MatIconModule,
     FlexLayoutModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   declarations: [
     AppComponent,

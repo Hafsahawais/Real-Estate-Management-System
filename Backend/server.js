@@ -16,8 +16,8 @@ var booking = require('./routes/bookingRouter');
 var property = require('./routes/propertyRouter');
 var projectRouter = require('./routes/projectRouter');
 var complainRouter = require("./routes/complainRouter");
-var chargeRouter = require("./routes/chargeRouter");
 var paymentRouter = require("./routes/paymentRouter");
+var subscriptionRouter = require("./routes/subscriptionRouter");
 var facilityRouter = require("./routes/facilityRouter");
 
 // Connect with DB
@@ -51,8 +51,8 @@ app.use('/auth', users);
 app.use('/booking', booking);
 app.use('/property', property);
 app.use("/complains", complainRouter);
-app.use("/payment", paymentRouter);
-app.use("/charge", chargeRouter);
+app.use('/pay', paymentRouter);
+app.use('/sub', subscriptionRouter);
 app.use("/facility", facilityRouter);
 app.use("/project", projectRouter);
 

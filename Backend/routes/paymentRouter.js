@@ -2,6 +2,6 @@ const express = require("express");
 const router = express.Router();
 const paymentController = require("../controller/payment.controller");
 
-router.get("/", paymentController.PayPage);
+router.post("/", paymentController.oneTimePayment);
 
 module.exports = router;
