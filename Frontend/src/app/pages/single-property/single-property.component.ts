@@ -4,6 +4,9 @@ import {UserService} from "../../services/user.service";
 import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute, Router} from "@angular/router";
 import {LoginService} from "../../services/login.service";
+import {StripePaymentComponent} from "../payment-page/stripe-payment.component";
+import {MatDialog} from "@angular/material/dialog";
+import {SuccessDialog} from "./SuccessDialog";
 
 @Component({
   selector: 'app-single-property',
@@ -22,6 +25,7 @@ export class SinglePropertyComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private dialog: MatDialog,
     private http: HttpClient
   ) {
   }
@@ -40,22 +44,37 @@ export class SinglePropertyComponent implements OnInit {
   }
 
 
-  buyProperty(price) {
+  createOrder(price, token) {
     let user;
     this.userID = this.userService.currentUser.user._id;
    this.userService.getcurrentUserDetails(this.userID).subscribe(data => {
      user = data
-     this.userService.makePayment({email: user.email, amount: price }).subscribe(res => {
-       const clientSecret = res.data['client_secret'];
-       const result = await stripe.confirmCardPayment(clientSecret, {
-         payment_method: {
-           card: elements.getElement(CardElement),
-           billing_details: {
-             email: email,
-           },
-         },
-       });
+     this.userService.makePayment({email: user.email, amount: price, stripeToken: token }).subscribe(res => {
+        console.log(res);
+        if(res.status === 'succeeded'){
+          this.dialog.open(SuccessDialog,{
+            width: '700px',
+            height: '200px'
+
+          })
+        }
      })
    })
+  }
+
+  checkout(price) {
+    const dialogRef = this.dialog.open(StripePaymentComponent, {
+      // opening dialog here which will give us back stripeToken
+      width: '700px',
+      height: '200px',
+      data: {totalAmount: price},
+    });
+    dialogRef.afterClosed()
+      // waiting for stripe token that will be given back
+      .subscribe((result: any) => {
+        if (result) {
+          this.createOrder(price ,result.token.id);
+        }
+      });
   }
 }

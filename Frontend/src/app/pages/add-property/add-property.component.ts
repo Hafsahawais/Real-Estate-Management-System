@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../services/user.service";
 import {CommonService} from "../../services/common.service";
 
@@ -10,12 +10,14 @@ import {CommonService} from "../../services/common.service";
   styleUrls: ['./add-property.component.scss']
 })
 export class AddPropertyComponent implements OnInit {
+  private projectId: any;
 
   constructor(
     private commonService: CommonService,
     private userService: UserService,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   propertyTypeList = [];
@@ -46,6 +48,9 @@ export class AddPropertyComponent implements OnInit {
     for (let key in data.value) {
       // iterate and set other form data
       imageData.append(key, data.value[key])
+    }
+    if(this.projectId) {
+      imageData.append('projectId', this.projectId)
     }
     console.log( imageData );
     this.commonService.togglePageLoaderFn(true);
@@ -108,6 +113,14 @@ export class AddPropertyComponent implements OnInit {
 
   ngOnInit() {
     this.getPropertyTypeList();
+    this.route.queryParams
+      .subscribe(params => {
+        console.log(params);
+
+        this.projectId = params.projectId;
+        console.log(this.projectId);
+      });
+
 
   }
 

@@ -45,6 +45,10 @@ export class CommonService {
     return this.http.get<any>(this.base_url + '/property/list/' + param);
   }
 
+  myProperties(param) {
+    return this.http.get<any>(this.base_url + '/property/myProperty/' + param);
+  }
+
   projectList(param = ''){
     return this.http.get<any>(this.base_url + '/project/projectList/' + param);
   }

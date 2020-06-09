@@ -118,7 +118,7 @@ module.exports = {
   },
   getPropertyForProject: async (req, res) => {
     try{
-      var result  = await Property.findOne({ _id: req.params.projectId })
+      var result  = await Property.find({ projectId: req.params.projectId })
           .populate('projectId');
       if(result) res.status(200).json({result});
       else throw new Error('Something Went Wrong');
@@ -130,7 +130,7 @@ module.exports = {
   },
   getMyProperty: async (req, res) => {
     try{
-      var result  = await Property.findOne({ _id: req.params.userId })
+      var result  = await Property.find({ userId: req.params.userId })
           .populate('userId');
       if(result) res.status(200).json({result});
       else throw new Error('Something Went Wrong');

@@ -1,6 +1,5 @@
 const express = require("express");
 const stripe = require("stripe")("sk_test_Ggk5p8mcL5Tv7C0uHGuty3jn00Mgc8kt8x");
-const Helper = require("../provider/helperStripe");
 module.exports = {
 
   // oneTimePayment: async (req, res) => {
@@ -19,8 +18,9 @@ module.exports = {
   // },
   makePayment: async (req,res) =>
   {
+    console.log(req.body)
     const stripeToken = req.body.stripeToken;
-    const price = req.body.price;
+    const price = req.body.amount;
     const priceInPence = price * 100;
     stripe.charges.create({
       amount: priceInPence,
@@ -29,10 +29,10 @@ module.exports = {
       capture: false,  // note that capture: false
     }).then(response => {
       // do something in success here
-      res.statusCode(200)
+      res.status(200).send(response)
     }).catch(error => {
       // do something in error here
-      res.statusCode(400)
+      res.status(400).send(error)
     });
   }
 

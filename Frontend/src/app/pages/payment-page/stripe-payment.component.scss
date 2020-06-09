@@ -1,29 +1,10 @@
-.cellContainer{
-    width: 15%;
-    float: left;
+#submit-button{
+  margin-top: 5%;
+  margin-left: 42%;
+  background-color: red;
+  color: white;
+  font-weight: bold;
 }
-
-.cellContainer1{
-    width: 8%;
-    float: left;
-}
-
-.cellContainernav{
-    width: 100%;
-    float: right;
-}
-
-h1, h2 {
-    color: white;
-}
-
-.property-image{
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    object-position: center;
-}
-
-.property-row:hover{
-  background-color: #dddddd;
+#form-field{
+  margin-top: 5%;
 }

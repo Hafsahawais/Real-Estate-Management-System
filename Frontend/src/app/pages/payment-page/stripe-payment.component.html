@@ -1,26 +1,13 @@
-<nav class="navbar navbar-top navbar-expand-md navbar-dark bg-gradient-danger" id="navbar-main">
-  <div class="cellContainernav">
-    <div style="float: left;">
-      <h1>Real Estate Management System</h1>
-    </div>
-</nav>
-<div class="header bg-gradient-danger pb-8 pt-5">
-
-</div>
-<!-- Page content -->
-<div class="container-fluid mt--7">
-  <!-- Table -->
-  <form (ngSubmit)="createStripeToken()" class="checkout">
-    <label for="card-info">Card Info</label>
-    <div id="form-field">
-      <div id="card-info" #cardInfo></div>
-      <button id="submit-button" type="submit">
-        Pay ${{_totalAmount}}
-      </button>
-      <span id="card-errors" role="alert" *ngIf="cardError">
+<form (ngSubmit)="createStripeToken()" class="checkout">
+  <label for="card-info">Card Info</label>
+  <div id="form-field">
+    <div id="card-info" #cardInfo></div>
+    <button mat-raised-button id="submit-button" type="submit">
+      Pay ${{_totalAmount}}
+    </button>
+    <span id="card-errors" role="alert" *ngIf="cardError">
         <mat-icon style="color: #f44336">cancel</mat-icon>
         &nbsp;{{ cardError }}
       </span>
-    </div>
-  </form>
-</div>
+  </div>
+</form>

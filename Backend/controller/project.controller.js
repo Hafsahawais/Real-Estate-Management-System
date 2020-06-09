@@ -16,6 +16,7 @@ module.exports = {
     projectList: (req, res) => {
         Project.find({ isActive: true })
             .populate('createdBy')
+            .populate('properties')
             .exec((err, result) => {
                 if (err)
                     res.status(400).send(err);

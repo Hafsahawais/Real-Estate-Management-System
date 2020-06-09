@@ -92,303 +92,94 @@
       </div>
     </div>
   </div>
-  <div class="d-flex flex-wrap" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap.xs="0" fxFlex fxLayoutGap="30px">
-    <div fxFlex *ngFor="let item of places" style="width: 10px">
-      <mat-card>
-        <img mat-card-image [src]="item.imgSrc">
-        <mat-card-header style="justify-content: center">
-          <mat-card-title>
-            <h3 class="m-0">{{item.place}}</h3>
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>
-            {{item.description}}
-          </p>
-        </mat-card-content>
 
-        <mat-card-actions>
-          <button mat-button>{{item.charge}}</button>
-          <button mat-button>
-            <mat-icon class="nav-icon">location_on</mat-icon> {{item.location}}
-          </button>
-        </mat-card-actions>
-      </mat-card>
+  <div class="container-fluid mt--7">
+    <h1>My Properties</h1>
+    <!-- Table -->
+    <div class="row">
+      <div class="col">
+        <div class="card shadow">
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+              <tr>
+                <th scope="col">Property</th>
+                <th scope="col">Price (PKR)</th>
+                <th scope="col">Location</th>
+                <th scope="col">Status</th>
+                <th scope="col">Description</th>
+                <th scope="col"></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr class="property-row" *ngFor="let item of propertyList">
+                <th routerLink="/single-property/{{item._id}}" scope="row">
+                  <div class="media align-items-center">
+                    <a href="javascript:void(0)">
+                      <img class="property-image" alt="Image placeholder" src="{{commonService.base_url}}/property/showGFSImage/{{ item.images[0] }}">
+                    </a>
+                  </div>
+                  <div class="d-flex justify-content-center">
+                    <span class="mt-2 text-sm">{{item.name}}</span>
+                  </div>
+                </th>
+                <td>
+                  {{item.price}}
+                </td>
+                <td>
+                  {{item.city}}
+                </td>
+                <td *ngIf="item.propertyFor === 'sell'">
+                  Available for Buying
+                </td>
+                <td *ngIf="item.propertyFor === 'rent'">
+                  Available for Rent
+                </td>
+                <td>
+                  {{item.description}}
+                </td>
+                <td class="text-right">
+                  <div ngbDropdown placement="bottom-right">
+                    <a class="btn btn-sm btn-icon-only text-light" ngbDropdownToggle>
+                      <i class="fas text-black-50 fa-ellipsis-v"></i>
+                    </a>
+                    <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
+                      <a class="dropdown-item" href="javascript:void(0)">Buy</a>
+                      <a class="dropdown-item" href="javascript:void(0)">Save</a>
+                      <a class="dropdown-item" href="javascript:void(0)">Share</a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <!--        <div class="card-footer py-4">-->
+          <!--          <nav aria-label="...">-->
+          <!--            <ul class="pagination justify-content-end mb-0">-->
+          <!--              <li class="page-item disabled">-->
+          <!--                <a class="page-link" href="javascript:void(0)" tabindex="-1">-->
+          <!--                  <i class="fas fa-angle-left"></i>-->
+          <!--                  <span class="sr-only">Previous</span>-->
+          <!--                </a>-->
+          <!--              </li>-->
+          <!--              <li class="page-item active">-->
+          <!--                <a class="page-link" href="javascript:void(0)">1</a>-->
+          <!--              </li>-->
+          <!--              <li class="page-item">-->
+          <!--                <a class="page-link" href="javascript:void(0)">2 <span class="sr-only">(current)</span></a>-->
+          <!--              </li>-->
+          <!--              <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>-->
+          <!--              <li class="page-item">-->
+          <!--                <a class="page-link" href="javascript:void(0)">-->
+          <!--                  <i class="fas fa-angle-right"></i>-->
+          <!--                  <span class="sr-only">Next</span>-->
+          <!--                </a>-->
+          <!--              </li>-->
+          <!--            </ul>-->
+          <!--          </nav>-->
+          <!--        </div>-->
+        </div>
+      </div>
     </div>
   </div>
-<div class="container-fluid mt--7">
-<!--  <div class="row">-->
-<!--    <div class="col-xl-8 mb-5 mb-xl-0">-->
-<!--      <div class="card bg-gradient-default shadow">-->
-<!--        <div class="card-header bg-transparent">-->
-<!--          <div class="row align-items-center">-->
-<!--            <div class="col">-->
-<!--              <h6 class="text-uppercase text-light ls-1 mb-1">Overview</h6>-->
-<!--              <h2 class="text-white mb-0">Sales value</h2>-->
-<!--            </div>-->
-<!--            <div class="col">-->
-<!--              <ul class="nav nav-pills justify-content-end">-->
-<!--                <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales"  (click)="data=datasets[0];updateOptions()">-->
-<!--                  <a href="javascript:void(0)" class="nav-link py-2 px-3" [ngClass]="{'active':clicked===true}" data-toggle="tab" (click)="clicked=true;clicked1=false">-->
-<!--                    <span class="d-none d-md-block">Month</span>-->
-<!--                    <span class="d-md-none">M</span>-->
-<!--                  </a>-->
-<!--                </li>-->
-<!--                <li class="nav-item" data-toggle="chart" data-target="#chart-sales"  (click)="data=datasets[1];updateOptions()">-->
-<!--                  <a href="javascript:void(0)" class="nav-link py-2 px-3" [ngClass]="{'active':clicked1===true}" data-toggle="tab" (click)="clicked=false;clicked1=true">-->
-<!--                    <span class="d-none d-md-block">Week</span>-->
-<!--                    <span class="d-md-none">W</span>-->
-<!--                  </a>-->
-<!--                </li>-->
-<!--              </ul>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <div class="card-body">-->
-<!--          &lt;!&ndash; Chart &ndash;&gt;-->
-<!--          <div class="chart">-->
-<!--            &lt;!&ndash; Chart wrapper &ndash;&gt;-->
-<!--            <canvas id="chart-sales" class="chart-canvas"></canvas>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="col-xl-4">-->
-<!--      <div class="card shadow">-->
-<!--        <div class="card-header bg-transparent">-->
-<!--          <div class="row align-items-center">-->
-<!--            <div class="col">-->
-<!--              <h6 class="text-uppercase text-muted ls-1 mb-1">Performance</h6>-->
-<!--              <h2 class="mb-0">Total orders</h2>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <div class="card-body">-->
-<!--          &lt;!&ndash; Chart &ndash;&gt;-->
-<!--          <div class="chart">-->
-<!--            <canvas id="chart-orders" class="chart-canvas"></canvas>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--  <div class="row mt-5">-->
-<!--    <div class="col-xl-8 mb-5 mb-xl-0">-->
-<!--      <div class="card shadow">-->
-<!--        <div class="card-header border-0">-->
-<!--          <div class="row align-items-center">-->
-<!--            <div class="col">-->
-<!--              <h3 class="mb-0">Page visits</h3>-->
-<!--            </div>-->
-<!--            <div class="col text-right">-->
-<!--              <a href="#!" class="btn btn-sm btn-primary">See all</a>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <div class="table-responsive">-->
-<!--          &lt;!&ndash; Projects table &ndash;&gt;-->
-<!--          <table class="table align-items-center table-flush">-->
-<!--            <thead class="thead-light">-->
-<!--              <tr>-->
-<!--                <th scope="col">Page name</th>-->
-<!--                <th scope="col">Visitors</th>-->
-<!--                <th scope="col">Unique users</th>-->
-<!--                <th scope="col">Bounce rate</th>-->
-<!--              </tr>-->
-<!--            </thead>-->
-<!--            <tbody>-->
-<!--              <tr>-->
-<!--                <th scope="row">-->
-<!--                  /argon/-->
-<!--                </th>-->
-<!--                <td>-->
-<!--                  4,569-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                  340-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                  <i class="fas fa-arrow-up text-success mr-3"></i> 46,53%-->
-<!--                </td>-->
-<!--              </tr>-->
-<!--              <tr>-->
-<!--                <th scope="row">-->
-<!--                  /argon/index.html-->
-<!--                </th>-->
-<!--                <td>-->
-<!--                  3,985-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                  319-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                  <i class="fas fa-arrow-down text-warning mr-3"></i> 46,53%-->
-<!--                </td>-->
-<!--              </tr>-->
-<!--              <tr>-->
-<!--                <th scope="row">-->
-<!--                  /argon/charts.html-->
-<!--                </th>-->
-<!--                <td>-->
-<!--                  3,513-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                  294-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                  <i class="fas fa-arrow-down text-warning mr-3"></i> 36,49%-->
-<!--                </td>-->
-<!--              </tr>-->
-<!--              <tr>-->
-<!--                <th scope="row">-->
-<!--                  /argon/tables.html-->
-<!--                </th>-->
-<!--                <td>-->
-<!--                  2,050-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                  147-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                  <i class="fas fa-arrow-up text-success mr-3"></i> 50,87%-->
-<!--                </td>-->
-<!--              </tr>-->
-<!--              <tr>-->
-<!--                <th scope="row">-->
-<!--                  /argon/profile.html-->
-<!--                </th>-->
-<!--                <td>-->
-<!--                  1,795-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                  190-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                  <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%-->
-<!--                </td>-->
-<!--              </tr>-->
-<!--            </tbody>-->
-<!--          </table>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="col-xl-4">-->
-<!--      <div class="card shadow">-->
-<!--        <div class="card-header border-0">-->
-<!--          <div class="row align-items-center">-->
-<!--            <div class="col">-->
-<!--              <h3 class="mb-0">Social traffic</h3>-->
-<!--            </div>-->
-<!--            <div class="col text-right">-->
-<!--              <a href="#!" class="btn btn-sm btn-primary">See all</a>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <div class="table-responsive">-->
-<!--          &lt;!&ndash; Projects table &ndash;&gt;-->
-<!--          <table class="table align-items-center table-flush">-->
-<!--            <thead class="thead-light">-->
-<!--              <tr>-->
-<!--                <th scope="col">Referral</th>-->
-<!--                <th scope="col">Visitors</th>-->
-<!--                <th scope="col"></th>-->
-<!--              </tr>-->
-<!--            </thead>-->
-<!--            <tbody>-->
-<!--              <tr>-->
-<!--                <th scope="row">-->
-<!--                  Facebook-->
-<!--                </th>-->
-<!--                <td>-->
-<!--                  1,480-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                  <div class="d-flex align-items-center">-->
-<!--                    <span class="mr-2">60%</span>-->
-<!--                    <div>-->
-<!--                      <div class="progress">-->
-<!--                        <div class="progress-bar bg-gradient-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </td>-->
-<!--              </tr>-->
-<!--              <tr>-->
-<!--                <th scope="row">-->
-<!--                  Facebook-->
-<!--                </th>-->
-<!--                <td>-->
-<!--                  5,480-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                  <div class="d-flex align-items-center">-->
-<!--                    <span class="mr-2">70%</span>-->
-<!--                    <div>-->
-<!--                      <div class="progress">-->
-<!--                        <div class="progress-bar bg-gradient-success" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%;"></div>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </td>-->
-<!--              </tr>-->
-<!--              <tr>-->
-<!--                <th scope="row">-->
-<!--                  Google-->
-<!--                </th>-->
-<!--                <td>-->
-<!--                  4,807-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                  <div class="d-flex align-items-center">-->
-<!--                    <span class="mr-2">80%</span>-->
-<!--                    <div>-->
-<!--                      <div class="progress">-->
-<!--                        <div class="progress-bar bg-gradient-primary" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;"></div>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </td>-->
-<!--              </tr>-->
-<!--              <tr>-->
-<!--                <th scope="row">-->
-<!--                  Instagram-->
-<!--                </th>-->
-<!--                <td>-->
-<!--                  3,678-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                  <div class="d-flex align-items-center">-->
-<!--                    <span class="mr-2">75%</span>-->
-<!--                    <div>-->
-<!--                      <div class="progress">-->
-<!--                        <div class="progress-bar bg-gradient-info" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;"></div>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </td>-->
-<!--              </tr>-->
-<!--              <tr>-->
-<!--                <th scope="row">-->
-<!--                  twitter-->
-<!--                </th>-->
-<!--                <td>-->
-<!--                  2,645-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                  <div class="d-flex align-items-center">-->
-<!--                    <span class="mr-2">30%</span>-->
-<!--                    <div>-->
-<!--                      <div class="progress">-->
-<!--                        <div class="progress-bar bg-gradient-warning" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: 30%;"></div>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </td>-->
-<!--              </tr>-->
-<!--            </tbody>-->
-<!--          </table>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-</div>

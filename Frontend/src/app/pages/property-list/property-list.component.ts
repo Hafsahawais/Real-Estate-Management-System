@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnChanges, OnInit} from '@angular/core';
 import {CommonService} from "../../services/common.service";
 import {UserService} from "../../services/user.service";
 import {HttpClient} from "@angular/common/http";
@@ -10,9 +10,9 @@ import {LoginService} from "../../services/login.service";
   templateUrl: './property-list.component.html',
   styleUrls: ['./property-list.component.scss']
 })
-export class PropertyListComponent implements OnInit {
+export class PropertyListComponent implements OnInit, AfterViewInit {
 
-  @Input() projectId;
+  @Input('projectId') projectId;
   public copy: string;
   properties = [];
   propertyList = [];
@@ -30,6 +30,10 @@ export class PropertyListComponent implements OnInit {
 
   ngOnInit() {
     this.getFullPropertyList();
+  }
+
+  ngAfterViewInit(){
+    console.log("projectid", this.projectId)
   }
 
   getPropertyList(params: any = '') {

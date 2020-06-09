@@ -24,6 +24,8 @@ import {RegistrationValidators} from "../../validators/registration.validators";
 import {AuthGuardService} from "../../services/auth-guard.service";
 import {LoginService} from "../../services/login.service";
 import {StripePaymentComponent} from "../../pages/payment-page/stripe-payment.component";
+import {MatDialogModule} from "@angular/material/dialog";
+import {SuccessDialog} from "../../pages/single-property/SuccessDialog";
 
 @NgModule({
     imports: [
@@ -38,6 +40,7 @@ import {StripePaymentComponent} from "../../pages/payment-page/stripe-payment.co
         MatIconModule,
         FlexLayoutModule,
         ReactiveFormsModule,
+        MatDialogModule,
 
     ],
   declarations: [
@@ -50,7 +53,8 @@ import {StripePaymentComponent} from "../../pages/payment-page/stripe-payment.co
     AddProjectComponent,
     SinglePropertyComponent,
     SingleProjectComponent,
-    StripePaymentComponent
+    StripePaymentComponent,
+    SuccessDialog
   ],
   providers: [
     LoginService,

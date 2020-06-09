@@ -34,14 +34,14 @@
           <div class="cellContainer">
             <h4 id="price">Price Range(PKR): {{project?.priceFrom}} - {{project?.priceTo}}</h4>
           </div>
-          <div class="cellContainer1">
-            <a class="btn btn-default" id="celldivupper">Share</a>
-          </div>
-          <div class="cellContainer1">
-            <a class="btn btn-default" id="celldivupper">Save</a>
-          </div>
-          <div class="cellContainer1">
-            <a class="btn btn-default" id="celldivupper">Buy</a>
+<!--          <div class="cellContainer1">-->
+<!--            <a class="btn btn-default" id="celldivupper">Share</a>-->
+<!--          </div>-->
+<!--          <div class="cellContainer1">-->
+<!--            <a class="btn btn-default" id="celldivupper">Save</a>-->
+<!--          </div>-->
+          <div routerLink="/add-property" [queryParams]="{ projectId: project?._id }" class="cellContainer1">
+            <a class="btn btn-default" id="celldivupper">Add Property</a>
           </div>
         </div>
         <div class="col-lg-12 col-lg-offset-2 col-md-12 col-md-offset-1 col-sm-12">
@@ -90,7 +90,7 @@
         <div class="col-lg-12 col-lg-offset-2 col-md-12 col-md-offset-1 col-sm-12">
           <h2 style="margin-top: 30px;">Properties:</h2>
         </div>
-        <app-property-list style="margin-top: 7%;margin-bottom: 20px" [projectId]="project?._id"></app-property-list>
+        <app-property-list style="margin-top: 7%;margin-bottom: 20px" projectId="{{project?._id}}"></app-property-list>
       </div>
     </div>
   </div>
