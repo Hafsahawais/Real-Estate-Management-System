@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
 
   loginSuccess(token) {
     this.commonService.changeHeaderMessage({ type: 'success', message: 'You have logged in successfully'});
-    this.router.navigate([this.urltoRedirect || '/users/dashboard']);
+    this.router.navigate([this.urltoRedirect || '/dashboard']);
 
     // if (this.urltoRedirect)
     //   this.router.navigate([this.urltoRedirect]);

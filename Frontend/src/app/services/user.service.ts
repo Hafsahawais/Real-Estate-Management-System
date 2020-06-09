@@ -33,4 +33,8 @@ export class UserService {
     return this.http.post(this.commonService.base_url + '/auth/user/register', body);
   }
 
+  makePayment(body) {
+    return this.http.post<any>(this.commonService.base_url + '/pay/',body)
+  }
+
 }

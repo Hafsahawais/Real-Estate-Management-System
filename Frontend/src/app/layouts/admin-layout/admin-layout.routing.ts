@@ -27,8 +27,15 @@ export const AdminLayoutRoutes: Routes = [
       component: ComplaintsComponent,
       canActivate: [AuthGuardService]
     },
-    { path: 'projects',       component: ProjectListComponent },
-    { path: 'properties',     component: PropertyListComponent },
+    {
+      path: 'project-list',
+      component: ProjectListComponent,
+      canActivate: [AuthGuardService]
+    },
+    { path: 'properties',
+      component: PropertyListComponent,
+      canActivate: [AuthGuardService]
+    },
     {
       path: 'add-property',
       component: AddPropertyComponent,
