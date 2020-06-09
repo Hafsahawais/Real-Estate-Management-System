@@ -15,6 +15,7 @@ export class SingleProjectComponent implements OnInit {
   public copy: string;
   project = [];
   private projectId: string;
+  private user: any;
 
 
   constructor(
@@ -30,6 +31,9 @@ export class SingleProjectComponent implements OnInit {
   ngOnInit() {
     this.projectId = this.activatedRoute.snapshot.paramMap.get('id')
     if(this.projectId) this.getProjectDetails()
+    this.userService.getcurrentUserDetails(this.userService.currentUser.user._id).subscribe(data => {
+      this.user=data;
+    })
   }
 
   getProjectDetails() {

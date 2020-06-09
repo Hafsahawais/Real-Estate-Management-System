@@ -26,6 +26,7 @@ import {LoginService} from "../../services/login.service";
 import {StripePaymentComponent} from "../../pages/payment-page/stripe-payment.component";
 import {MatDialogModule} from "@angular/material/dialog";
 import {SuccessDialog} from "../../pages/single-property/SuccessDialog";
+import {ComplaintSuccessDialog} from "../../pages/complaints/ComplaintSuccessDialog";
 
 @NgModule({
     imports: [
@@ -54,6 +55,7 @@ import {SuccessDialog} from "../../pages/single-property/SuccessDialog";
     SinglePropertyComponent,
     SingleProjectComponent,
     StripePaymentComponent,
+    ComplaintSuccessDialog,
     SuccessDialog
   ],
   providers: [

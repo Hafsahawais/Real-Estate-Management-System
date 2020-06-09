@@ -65,4 +65,8 @@ export class CommonService {
     return this.http.get<any>(this.base_url + '/property/filter' + param );
   }
 
+  createComplain(body) {
+    return this.http.post<any>(this.base_url + '/complains/new', body)
+  }
+
 }

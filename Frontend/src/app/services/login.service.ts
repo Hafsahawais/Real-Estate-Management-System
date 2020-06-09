@@ -47,6 +47,7 @@ export class LoginService {
 
   logOut(){
     localStorage.removeItem('token');
+    localStorage.clear()
     this.router.navigate([''], {
       queryParams: { success: 'logOut' }
     });

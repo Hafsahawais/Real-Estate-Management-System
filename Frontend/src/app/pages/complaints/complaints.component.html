@@ -96,20 +96,20 @@
   <!-- Dark table -->
   <div class="row mt-5">
     <div class="col">
-      <div class="card bg-default shadow">
+      <div [formGroup]="complainDetails" class="card bg-default shadow">
         <div class="card-header bg-transparent border-0">
           <h3 class="text-white mb-0">Submit Complaint</h3>
         </div>
         <div class="row">
           <div class="col-lg-12 col-lg-offset-2 col-md-12 col-md-offset-1 col-sm-12">
             <div class="cellContainer">
-              <div style="margin-left: 20px; margin-right: 20px;">                                     
-                <input type="text" class="form-control" placeholder="Complaint Title (Faulty Wiring, Shutdown..)">
+              <div style="margin-left: 20px; margin-right: 20px;">
+                <input type="text" formControlName="title" class="form-control" placeholder="Complaint Title (Faulty Wiring, Shutdown..)">
               </div>
             </div>
             <div class="cellContainer1">
               <div style="margin-right: 20px;">
-                <select id="basic" class="selectpicker show-tick form-control" title="Status of Property">
+                <select formControlName="type" id="basic" class="selectpicker show-tick form-control" title="Status of Property">
                   <option disabled selected hidden>Type</option>
                   <option>All</option>
                   <option>Electricity</option>
@@ -125,7 +125,7 @@
           <div class="col-lg-12 col-lg-offset-2 col-md-12 col-md-offset-1 col-sm-12">
             <div class="form-group">
               <div style="margin-right: 20px; margin-left: 20px; margin-top: 20px;">
-                <textarea class="form-control" rows="7" placeholder="Write complaint here.."></textarea>
+                <textarea formControlName="description" class="form-control" rows="7" placeholder="Write complaint here.."></textarea>
               </div>
             </div>
           </div>
@@ -134,7 +134,7 @@
           <div class="col-lg-12 col-lg-offset-2 col-md-12 col-md-offset-1 col-sm-12">
             <div id="submit_complaint_button">
               <div style="margin-right: 20px; margin-left: 20px; margin-bottom: 20px;">
-                <a href="javascript:void(0)" class="btn btn-white" id="submit_complaint_button">SUBMIT COMPLAINT</a>
+                <a (click)="submitComplaint()" href="javascript:void(0)" class="btn btn-white" id="submit_complaint_button">SUBMIT COMPLAINT</a>
               </div>
             </div>
           </div>

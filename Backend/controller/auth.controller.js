@@ -71,11 +71,9 @@ conn.on('connected', () => {
         // users.body.imgPath = 'register';
         // users.pincode = req.body.pincode;
         // users.userType = req.body.userType;
-        users.createdOn = new Date();
-
         await bcrypt.hash(req.body.password, 8,async function (err, hash) {
           if (err) {
-            // console.log('Bycrpt')
+            console.log('Bycrpt')
             res.status(400).send(err);
           }
           else {
@@ -83,11 +81,11 @@ conn.on('connected', () => {
                console.log(users)
               await users.save((err, data) => {
               if (err){
-                // console.log('User Save')
+                console.log('User Save')
                 res.status(400).send(err);
               }
               else {
-                // console.log('user added')
+                console.log('user added')
                 res.status(200).json({message: "User Added Successfully", id: data._id});
               }
             });

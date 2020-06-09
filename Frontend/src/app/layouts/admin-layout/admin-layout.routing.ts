@@ -46,6 +46,14 @@ export const AdminLayoutRoutes: Routes = [
       component: AddProjectComponent,
       canActivate: [AuthGuardService]
     },
-    { path: 'single-property/:id',    component: SinglePropertyComponent },
-    { path: 'single-project/:id',    component: SingleProjectComponent },
+    {
+      path: 'single-property/:id',
+      component: SinglePropertyComponent,
+      canActivate: [AuthGuardService]
+    },
+    {
+      path: 'single-project/:id',
+      component: SingleProjectComponent,
+      canActivate: [AuthGuardService]
+    },
 ];

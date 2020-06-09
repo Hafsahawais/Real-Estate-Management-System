@@ -15,11 +15,12 @@ export class ProjectListComponent implements OnInit {
   public copy: string;
   projects: Array<any> = [];
   projectList = []
+  user;
 
   constructor(
     public commonService: CommonService,
-    private loginService: LoginService,
-    private userService: UserService,
+    public loginService: LoginService,
+    public userService: UserService,
     private router: Router,
     private http: HttpClient
   ) {}
@@ -36,5 +37,8 @@ export class ProjectListComponent implements OnInit {
 
   ngOnInit() {
     this.getFullProjectList()
+    this.userService.getcurrentUserDetails(this.userService.currentUser.user._id).subscribe(data => {
+      this.user=data;
+    })
   }
 }
